@@ -29,7 +29,7 @@
         <nav class="nav container">
             <a href="index.html" class="nav__logo">
                 <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
-                Segunda-Feira
+                Timer
             </a>
 
             <div class="nav__menu" id="nav-menu">
@@ -66,28 +66,105 @@
     <!--==================== FOOTER ====================-->
     <footer class="footer section">
         <div class="timer-container">
-          <p>Descanso: <span id="timer">02:00</span></p>
-          <button id="play-btn" onclick="startTimer()">Play</button>
-          <button id="stop-btn" onclick="stopTimer()">Stop</button>
-          <button id="reset-btn" onclick="resetTimer()">Zerar</button>
+            <p>Descanso: <span id="timer">02:00</span></p>
+            <button id="play-btn" onclick="startTimer()">Play</button>
+            <button id="stop-btn" onclick="stopTimer()">Stop</button>
+            <button id="reset-btn" onclick="resetTimer()">Zerar</button>
         </div>
-      
+    
         <div class="workout-form">
-          <label for="kg">Peso (kg):</label>
-          <input type="number" id="kg" placeholder="Digite o peso (kg)" required>
-          <br>
-          <label for="reps">Repetições:</label>
-          <input type="number" id="reps" placeholder="Digite o número de repetições" required>
-          
-          <button onclick="saveData()">Salvar</button>
+            <label for="exercise-name">Nome do Exercício:</label>
+            <input type="text" id="exercise-name" placeholder="Digite o nome do exercício" required>
+            <br>
+    
+            <label for="kg">Peso (kg):</label>
+            <input type="number" id="kg" placeholder="Digite o peso (kg)" required>
+            <br>
+    
+            <label for="reps">Repetições:</label>
+            <input type="number" id="reps" placeholder="Digite o número de repetições" required>
+            <br>
+    
+            <label for="sound-effect">Escolha um efeito sonoro:</label>
+            <select id="sound-effect">
+                <option value="sound1.mp3">Efeito Sonoro 1</option>
+                <option value="sound2.mp3">Efeito Sonoro 2</option>
+                <option value="sound3.mp3">Efeito Sonoro 3</option>
+            </select>
+            <br>
+    
+            <button type="button" onclick="saveData()">Salvar</button>
         </div>
-      
+    
         <div class="saved-data">
-          <h3>Dados Salvos:</h3>
-          <ul id="data-list"></ul>
+            <h3>Dados Salvos:</h3>
+            <ul id="data-list"></ul>
         </div>
-      </footer>
-      
+    </footer>
+    
+    <script>
+        // Função para carregar os dados salvos do LocalStorage
+        function loadSavedData() {
+            const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
+            const dataList = document.getElementById('data-list');
+            dataList.innerHTML = ''; // Limpa a lista antes de adicionar os itens novamente
+    
+            savedData.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Exercício: ${item.exerciseName}, Peso: ${item.kg} kg, Reps: ${item.reps}, Efeito Sonoro: ${item.soundEffect}`;
+                dataList.appendChild(listItem);
+            });
+        }
+    
+        // Função para salvar os dados no LocalStorage
+        function saveData() {
+            const exerciseName = document.getElementById('exercise-name').value;
+            const kg = document.getElementById('kg').value;
+            const reps = document.getElementById('reps').value;
+            const soundEffect = document.getElementById('sound-effect').value;
+    
+            if (!exerciseName || !kg || !reps) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+    
+            // Cria um objeto com os dados do exercício
+            const workoutData = {
+                exerciseName,
+                kg,
+                reps,
+                soundEffect
+            };
+    
+            // Recupera os dados já salvos do LocalStorage
+            const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
+    
+            // Adiciona os novos dados ao array de dados salvos
+            savedData.push(workoutData);
+    
+            // Salva os dados atualizados no LocalStorage
+            localStorage.setItem('workoutData', JSON.stringify(savedData));
+    
+            // Adiciona os dados na lista HTML
+            const listItem = document.createElement('li');
+            listItem.textContent = `Exercício: ${exerciseName}, Peso: ${kg} kg, Reps: ${reps}, Efeito Sonoro: ${soundEffect}`;
+            document.getElementById('data-list').appendChild(listItem);
+    
+            // Toca o efeito sonoro selecionado
+            const audio = new Audio(soundEffect);
+            audio.play();
+    
+            // Limpa os campos de entrada
+            document.getElementById('exercise-name').value = '';
+            document.getElementById('kg').value = '';
+            document.getElementById('reps').value = '';
+            document.getElementById('sound-effect').value = 'sound1.mp3';  // Define o valor padrão
+        }
+    
+        // Carrega os dados salvos assim que a página for carregada
+        window.onload = loadSavedData;
+    </script>
+    
       
 
     <!--=============== SCROLL REVEAL ===============-->
