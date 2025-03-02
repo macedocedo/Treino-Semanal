@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!--=============== SWIPER CSS ===============--> 
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="./css/styles1.css">
+
+    <title>Treino Semanal</title>
+
+    <style>
+        /* Estilos para a rolagem horizontal */
+        .horizontal-scroll-container {
+            display: flex;
+            overflow-x: auto;  /* Permite rolar horizontalmente */
+            gap: 20px;  /* Espaço entre os itens */
+            padding: 20px;
+            scroll-snap-type: x mandatory;  /* Permite um "efeito de clique" suave quando rolar */
+            width: 100vw;  /* Preenche toda a largura da tela */
+            height: 90vh;  /* Preenche toda a altura da tela */
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar {
+            height: 8px; /* Tamanho da barra de rolagem */
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+            background-color: #ffffff00;  /* Cor da barra de rolagem */
+            border-radius: 10px;
+        }
+
+        .grid-item {
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 8px;
+            width: 98vw;  /* Largura maior para ocupar mais espaço */
+            max-width: 400px;  /* Largura máxima para não ficar muito grande */
+            height: 80vh;  /* Altura maior para usar mais da tela */
+            padding: 15px;
+            text-align: center;
+            scroll-snap-align: start;  /* Alinha o item quando for rolado */
+            flex-shrink: 0;  /* Impede que os itens encolham */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 50%;
+            object-fit: cover;  /* Garante que a imagem cubra a área do item */
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .grid-item h2 {
+            font-size: 32px;  /* Tamanho maior para o título */
+            margin-bottom: 10px;
+        }
+
+        .grid-item p {
+            font-size: 18px;  /* Tamanho maior para o texto */
+            color: #000000;
+            max-width: 90%;  /* Limita a largura do texto */
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--==================== HEADER ====================-->
+
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
+                Sexta-Feira
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="index.html" class="nav__link active-link">Inicio</a>
+                    </li>
+                </ul>
+
+                <div class="nav__close" id="nav-close">
+                    <i class='bx bx-x' ></i>
+                </div>
+
+                <img src="assets/img/nav-light.png" alt="" class="nav__img">
+            </div>
+            <div class="nav__btns">
+
+                <!-- Theme change button -->
+
+                <i class='bx bx-moon change-theme' id="theme-button"></i>
+
+                <!-- Toggle button -->
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-grid-alt' ></i>
+                </div>
+            </div>
+
+        </nav>
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <section class="home" id="home">
+            <div class="home__container container">
+                <h1 class="home__title"> Costas </h1>
+            </div>
+
+            <!--==================== GRID DE EXERCÍCIOS COM ROLAGEM HORIZONTAL ====================-->
+            <div class="horizontal-scroll-container">
+
+                <div class="grid-item">
+                    <img src="./assets/img/Remada curvada.gif" alt="Exercício 1">
+                    <h2 class="home__title"> Remada curvada </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 3</h1>
+                    <h1>Repeticoes: 8</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Remada baixa maquina.gif" alt="Exercício 2">
+                    <h2 class="home__title"> Remada baixa maquina </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 3</h1>
+                    <h1>Repeticoes: 12</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Costas Pull down.gif" alt="Exercício 3">
+                    <h2 class="home__title"> Costas Pull down </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 4</h1>
+                    <h1>Repeticoes: 12</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Costas Pulley aberto.webp" alt="Exercício 4">
+                    <h2 class="home__title"> Costas Pulley aberto </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 3</h1>
+                    <h1>Repeticoes: 8</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Costas Pulley neutro.gif" alt="Exercício 5">
+                    <h2 class="home__title"> Pesado Costas Pulley neutro </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 3</h1>
+                    <h1>Repeticoes: 8</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Costas Levantamento terra.gif" alt="Exercício 6">
+                    <h2 class="home__title"> Costas Levantamento terra </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 3</h1>
+                    <h1>Repeticoes: 3</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Rosca alternada.gif" alt="Exercício 7">
+                    <h2 class="home__title"> Rosca alternada </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 4</h1>
+                    <h1>Repeticoes: 12</h1>
+
+                </div>
+
+                <div class="grid-item">
+                    <img src="./assets/img/Rosca Martelo.gif" alt="Exercício 7">
+                    <h2 class="home__title"> Rosca Martelo </h2> 
+
+                    <h1>Tipo: Costas</h1>
+                    <h1>Series: 3</h1>
+                    <h1>Repeticoes: 12</h1>
+
+                </div>
+
+
+                <!-- Adicione mais itens do grid conforme necessário -->
+            </div>
+        </section>
+    </main>
+
+    <!--==================== FOOTER ====================-->
+    <footer class="footer section">
+        <div class="timer-container">
+          <p>Descanso: <span id="timer">02:00</span></p>
+          <button id="play-btn" onclick="startTimer()">Play</button>
+          <button id="stop-btn" onclick="stopTimer()">Stop</button>
+          <button id="reset-btn" onclick="resetTimer()">Zerar</button>
+        </div>
+      
+        <div class="workout-form">
+          <label for="kg">Peso (kg):</label>
+          <input type="number" id="kg" placeholder="Digite o peso (kg)" required>
+          <br>
+          <label for="reps">Repetições:</label>
+          <input type="number" id="reps" placeholder="Digite o número de repetições" required>
+          
+          <button onclick="saveData()">Salvar</button>
+        </div>
+      
+        <div class="saved-data">
+          <h3>Dados Salvos:</h3>
+          <ul id="data-list"></ul>
+        </div>
+      </footer>
+      
+      
+      
+
+    <!--=============== SCROLL REVEAL ===============-->
+    <script src="./js/scrollreveal.min.js"></script>
+
+    <!--=============== SWIPER JS ===============-->
+    <script src="./js/swiper-bundle.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="./js/main.js"></script>
+</body>
+</html>
