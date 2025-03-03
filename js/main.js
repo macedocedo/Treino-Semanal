@@ -129,52 +129,46 @@ sr.reveal(`.giving__content, .gift__card`,{interval: 100})
 sr.reveal(`.celebrate__data, .message__form, .footer__img1`,{origin: 'left'})
 sr.reveal(`.celebrate__img, .message__img, .footer__img2`,{origin: 'right'})
 
-let timer = 120; // Tempo inicial em segundos (2 minutos)
 let timerInterval;
-const timerElement = document.getElementById("timer");
+let audio = new Audio('./assets/tistreza.mp3'); // Caminho para o arquivo de áudio
 
-// Atualizar o temporizador na tela
-function updateTimer() {
-  let minutes = Math.floor(timer / 60);
-  let seconds = timer % 60;
-  seconds = seconds < 10 ? "0" + seconds : seconds;
-  timerElement.textContent = `${minutes}:${seconds}`;
-  
-  if (timer > 0) {
-    timer--;
-  } else {
-    clearInterval(timerInterval);
-    alert("O tempo acabou!");
-    document.getElementById("play-btn").disabled = false;
-    document.getElementById("stop-btn").disabled = true;
-  }
+// Função para tocar o som
+function playSound() {
+  audio.play();
 }
 
-// Iniciar o temporizador
+// Função para iniciar o temporizador
 function startTimer() {
-  if (!timerInterval) { // Só iniciar se não houver um timer ativo
-    timerInterval = setInterval(updateTimer, 1000);
-    document.getElementById("play-btn").disabled = true; // Desabilitar o botão Play enquanto o timer está ativo
-    document.getElementById("stop-btn").disabled = false; // Habilitar o botão Stop
-  }
+  let timerDisplay = document.getElementById('timer');
+  let timeLeft = 2 * 60; // 2 minutos em segundos
+  timerInterval = setInterval(function() {
+    timeLeft--;
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
+
+    // Verifica se o tempo chegou a zero
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      playSound(); // Toca o som quando o tempo zerar
+    }
+  }, 1000);
 }
 
-// Parar o temporizador
+// Função para formatar o tempo (ex: 1:09)
+function formatTime(time) {
+  return time < 10 ? '0' + time : time;
+}
+
+// Função para parar o temporizador
 function stopTimer() {
   clearInterval(timerInterval);
-  timerInterval = null;
-  document.getElementById("play-btn").disabled = false; // Habilitar o botão Play
-  document.getElementById("stop-btn").disabled = true; // Desabilitar o botão Stop
 }
 
-// Zerar o temporizador
+// Função para zerar o temporizador
 function resetTimer() {
-  clearInterval(timerInterval); // Parar o timer caso esteja rodando
-  timerInterval = null;
-  timer = 120; // Resetar para 2 minutos
-  updateTimer(); // Atualizar a tela com o tempo zerado
-  document.getElementById("play-btn").disabled = false; // Habilitar o botão Play
-  document.getElementById("stop-btn").disabled = true; // Desabilitar o botão Stop
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = '02:00';
 }
 
 // Salvar os dados de peso e repetições
@@ -327,5 +321,6 @@ function saveData() {
         
         // Instanciando a classe
         const noteBlock = new NoteBlock();
+        
         
         
