@@ -295,7 +295,7 @@ body.dark-theme {
 
 /*=============== HOME ===============*/
 .home__container {
-  padding-top: 0rem;
+  padding-top: 1rem;
   row-gap: 1.5rem;
 }
 

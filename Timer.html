@@ -17,14 +17,11 @@
     <link rel="stylesheet" href="./css/styles1.css">
 
     <title>Treino Semanal</title>
- 
-    </main>
 </head>
 
 <body>
 
     <!--==================== HEADER ====================-->
-
     <header class="header" id="header">
         <nav class="nav container">
             <a href="index.html" class="nav__logo">
@@ -46,22 +43,16 @@
                 <img src="assets/img/nav-light.png" alt="" class="nav__img">
             </div>
             <div class="nav__btns">
-
                 <!-- Theme change button -->
-
                 <i class='bx bx-moon change-theme' id="theme-button"></i>
 
                 <!-- Toggle button -->
-
                 <div class="nav__toggle" id="nav-toggle">
                     <i class='bx bx-grid-alt' ></i>
                 </div>
             </div>
-
         </nav>
     </header>
-
-
 
     <!--==================== FOOTER ====================-->
     <footer class="footer section">
@@ -74,15 +65,15 @@
     
         <div class="workout-form">
             <label for="exercise-name">Nome do Exercício:</label>
-            <input type="text" id="exercise-name" placeholder="Digite o nome do exercício" required>
+            <input type="text" id="exercise-name" placeholder="Exercício" required>
             <br>
     
             <label for="kg">Peso (kg):</label>
-            <input type="number" id="kg" placeholder="Digite o peso (kg)" required>
+            <input type="number" id="kg" placeholder="peso (kg)" required>
             <br>
     
             <label for="reps">Repetições:</label>
-            <input type="number" id="reps" placeholder="Digite o número de repetições" required>
+            <input type="number" id="reps" placeholder="Repetições" required>
             <br>
     
             <label for="sound-effect">Escolha um efeito sonoro:</label>
@@ -108,12 +99,19 @@
             const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
             const dataList = document.getElementById('data-list');
             dataList.innerHTML = ''; // Limpa a lista antes de adicionar os itens novamente
-    
-            savedData.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `Exercício: ${item.exerciseName}, Peso: ${item.kg} kg, Reps: ${item.reps}, Efeito Sonoro: ${item.soundEffect}`;
-                dataList.appendChild(listItem);
-            });
+
+            // Verifica se há dados salvos
+            if (savedData.length === 0) {
+                const noDataMessage = document.createElement('li');
+                noDataMessage.textContent = "Nenhum dado salvo.";
+                dataList.appendChild(noDataMessage);
+            } else {
+                savedData.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Exercício: ${item.exerciseName}, Peso: ${item.kg} kg, Reps: ${item.reps}, Efeito Sonoro: ${item.soundEffect}`;
+                    dataList.appendChild(listItem);
+                });
+            }
         }
     
         // Função para salvar os dados no LocalStorage
@@ -130,10 +128,10 @@
     
             // Cria um objeto com os dados do exercício
             const workoutData = {
-                exerciseName,
-                kg,
-                reps,
-                soundEffect
+                exerciseName: exerciseName,  // Nome do exercício
+                kg: kg,
+                reps: reps,
+                soundEffect: soundEffect
             };
     
             // Recupera os dados já salvos do LocalStorage
@@ -145,10 +143,8 @@
             // Salva os dados atualizados no LocalStorage
             localStorage.setItem('workoutData', JSON.stringify(savedData));
     
-            // Adiciona os dados na lista HTML
-            const listItem = document.createElement('li');
-            listItem.textContent = `Exercício: ${exerciseName}, Peso: ${kg} kg, Reps: ${reps}, Efeito Sonoro: ${soundEffect}`;
-            document.getElementById('data-list').appendChild(listItem);
+            // Atualiza a exibição dos dados salvos
+            loadSavedData();
     
             // Toca o efeito sonoro selecionado
             const audio = new Audio(soundEffect);
@@ -164,8 +160,6 @@
         // Carrega os dados salvos assim que a página for carregada
         window.onload = loadSavedData;
     </script>
-    
-      
 
     <!--=============== SCROLL REVEAL ===============-->
     <script src="./js/scrollreveal.min.js"></script>
