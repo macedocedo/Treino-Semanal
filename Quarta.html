@@ -203,32 +203,15 @@
     </main>
 
     <!--==================== FOOTER ====================-->
-    <footer class="footer section">
-        <div class="timer-container">
-          <p>Descanso: <span id="timer">02:00</span></p>
-          <button id="play-btn" onclick="startTimer()">Play</button>
-          <button id="stop-btn" onclick="stopTimer()">Stop</button>
-          <button id="reset-btn" onclick="resetTimer()">Zerar</button>
-        </div>
-      
-        <div class="workout-form">
-          <label for="kg">Peso (kg):</label>
-          <input type="number" id="kg" placeholder="Digite o peso (kg)" required>
-          <br>
-          <label for="reps">Repetições:</label>
-          <input type="number" id="reps" placeholder="Digite o número de repetições" required>
-          
-          <button onclick="saveData()">Salvar</button>
-        </div>
-      
-        <div class="saved-data">
-          <h3>Dados Salvos:</h3>
-          <ul id="data-list"></ul>
-        </div>
-      </footer>
-      
-      
-      
+    <button id="toggle-footer-btn" onclick="toggleFooter()">Tempo de Descanso</button>
+
+    <footer class="footer section" id="footer" style="display: none;">
+      <div class="timer-container">
+        <p>Descanso: <span id="timer">02:00</span></p>
+        <button id="play-btn" onclick="startTimer()">Play</button>
+        <button id="stop-btn" onclick="stopTimer()">Stop</button>
+        <button id="reset-btn" onclick="resetTimer()">Zerar</button>
+      </div>
 
     <!--=============== SCROLL REVEAL ===============-->
     <script src="./js/scrollreveal.min.js"></script>

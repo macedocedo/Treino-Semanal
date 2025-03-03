@@ -195,3 +195,137 @@ function saveData() {
     alert("Por favor, preencha os campos de peso e repetições.");
   }
 }
+        // Função para mostrar ou esconder o bloco de notas
+        function toggleNoteContainer() {
+          const noteContainer = document.getElementById("noteContainer");
+          const toggleButton = document.querySelector(".toggle-btn");
+    
+          // Alternar a visibilidade do bloco de notas
+          if (noteContainer.style.display === "none" || noteContainer.style.display === "") {
+            noteContainer.style.display = "block";
+            toggleButton.innerText = "Fechar Bloco de Notas"; // Muda o texto do botão
+          } else {
+            noteContainer.style.display = "none";
+            toggleButton.innerText = "Abrir Bloco de Notas"; // Restaura o texto do botão
+          }
+        }
+    
+        // Função para salvar a nota no localStorage
+        function saveNote() {
+          const noteContent = document.getElementById("note").value;
+    
+          if (noteContent.trim() !== "") {
+            // Recupera as notas salvas ou cria um array vazio
+            let notes = JSON.parse(localStorage.getItem("notes")) || [];
+            
+            // Adiciona a nova nota ao array
+            notes.push(noteContent);
+            
+            // Salva o array de notas no localStorage
+            localStorage.setItem("notes", JSON.stringify(notes));
+            
+            // Limpa o campo de texto
+            document.getElementById("note").value = "";
+    
+            // Atualiza a lista de notas salvas
+            showSavedNotes();
+          }
+        }
+    
+        // Função para exibir as notas salvas
+        function showSavedNotes() {
+          const savedNotesContainer = document.getElementById("savedNotes");
+          savedNotesContainer.innerHTML = ''; // Limpa a área de notas salvas
+    
+          // Recupera as notas salvas no localStorage
+          const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    
+          // Exibe todas as notas salvas
+          savedNotes.forEach(function(note, index) {
+            const noteDiv = document.createElement("div");
+            noteDiv.classList.add("saved-note");
+            noteDiv.innerText = note;
+            
+            // Adiciona um botão de exclusão a cada nota
+            const deleteButton = document.createElement("button");
+            deleteButton.innerText = "Excluir";
+            deleteButton.classList.add("delete-single-btn");
+            deleteButton.onclick = function() {
+              deleteSingleNote(index);
+            };
+    
+            // Adiciona a nota e o botão de exclusão ao contêiner
+            noteDiv.appendChild(deleteButton);
+            savedNotesContainer.appendChild(noteDiv);
+          });
+        }
+    
+        // Função para excluir uma anotação específica
+        function deleteSingleNote(index) {
+          // Recupera as notas salvas no localStorage
+          let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    
+          // Remove a nota pelo índice
+          notes.splice(index, 1);
+    
+          // Atualiza o localStorage com as notas restantes
+          localStorage.setItem("notes", JSON.stringify(notes));
+    
+          // Atualiza a exibição das notas salvas
+          showSavedNotes();
+        }
+    
+        // Exibe as notas salvas quando a página é carregada
+        window.onload = function() {
+          showSavedNotes();
+        };
+        function toggleFooter() {
+          var footer = document.getElementById('footer');
+          var button = document.getElementById('toggle-footer-btn');
+        
+          // Se o footer estiver desativado (oculto)
+          if (footer.style.display === 'none' || footer.style.display === '') {
+            footer.style.display = 'block';  // Ativar o footer
+            footer.classList.remove('disabled');  // Certifique-se de que não há classe 'disabled'
+            button.textContent = 'Desativar Tempo de Descanso';  // Alterar o texto do botão
+          } else {
+            footer.style.display = 'none';  // Ocultar o footer (desativar)
+            footer.classList.add('disabled');  // Adicionar classe para desativar interações
+            button.textContent = 'Tempo de Descanso';  // Alterar o texto do botão
+          }
+        }
+        
+        class NoteBlock {
+          constructor() {
+            this.noteContainer = document.getElementById('noteContainer');
+            this.noteTextarea = document.getElementById('note');
+            this.savedNotesContainer = document.getElementById('savedNotes');
+          }
+        
+          // Função para alternar a visibilidade do bloco de notas
+          toggleNoteContainer() {
+            this.noteContainer.style.display = this.noteContainer.style.display === 'block' ? 'none' : 'block';
+          }
+        
+          // Função para salvar a anotação
+          saveNote() {
+            const noteText = this.noteTextarea.value.trim();
+        
+            if (noteText) {
+              const savedNote = document.createElement('div');
+              savedNote.classList.add('saved-note');
+              savedNote.textContent = noteText;
+              this.savedNotesContainer.appendChild(savedNote);
+              
+              // Limpar o textarea após salvar
+              this.noteTextarea.value = '';
+            } else {
+              alert('Por favor, insira alguma anotação!');
+            }
+          }
+        }
+        
+        // Instanciando a classe
+        const noteBlock = new NoteBlock();
+        
+        

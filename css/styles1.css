@@ -130,7 +130,7 @@ button {
 
 body.dark-theme {
   --title-color: hsl(355, 4%, 95%);
-  --text-color: hsl(355, 4%, 75%);
+  --text-color: hsl(0, 0%, 100%);
   --body-color: hsl(0, 0%, 0%);
   --container-color: hsl(0, 0%, 0%);
 }
@@ -179,7 +179,7 @@ body.dark-theme {
 }
 
 .section {
-  padding: 1rem 5px 2rem;
+  padding: 2rem 5px 2rem;
 }
 
 .section__title {
@@ -325,7 +325,7 @@ body.dark-theme {
   display: inline-block;
   background-color: var(--first-color);
   color: rgb(0, 0, 0);
-  padding: 1.15rem 2.75rem;
+  padding: 0.50rem 1.75rem;
   font-weight: var(--font-medium);
   border-radius: 3rem;
   transition: .3s;
@@ -884,29 +884,104 @@ body.dark-theme {
 
 button {
   margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #28a745;
+  border-radius: 5px;
+  padding: 10px 110px;
+  background-color: #b7eaf3;
   color: rgb(0, 0, 0);
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #218838;
+  background-color: #2eceeb;
 }
 
 #stop-btn {
-  background-color: #dc3545;
+  background-color: #b7eaf3;
 }
 
 #stop-btn:hover {
-  background-color: #c82333;
+  background-color: #2eceeb;
 }
 
 #play-btn {
-  background-color: #007bff;
+  background-color: #b7eaf3;
 }
 
 #play-btn:hover {
-  background-color: #0069d9;
+  background-color: #2eceeb;
+}
+
+/* Estilos para o footer */
+footer {
+  position: relative;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Estilos para o bloco de notas dentro do footer */
+.note-container {
+  display: none;
+  padding: 15px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;  /* Espaço entre o footer e o bloco de notas */
+  text-align: center;
+  overflow-y: auto; /* Para permitir rolagem se o conteúdo for muito grande */
+}
+
+.note-container h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.note-textarea {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.save-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+.saved-notes {
+  margin-top: 20px;
+}
+
+.saved-note {
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.toggle-btn {
+  padding: 10px;
+  background-color: #202020;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.toggle-btn:hover {
+  background-color: #202020;
 }
