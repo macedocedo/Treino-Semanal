@@ -289,38 +289,34 @@ function saveData() {
           }
         }
         
-        class NoteBlock {
-          constructor() {
-            this.noteContainer = document.getElementById('noteContainer');
-            this.noteTextarea = document.getElementById('note');
-            this.savedNotesContainer = document.getElementById('savedNotes');
-          }
-        
-          // Função para alternar a visibilidade do bloco de notas
-          toggleNoteContainer() {
-            this.noteContainer.style.display = this.noteContainer.style.display === 'block' ? 'none' : 'block';
-          }
-        
-          // Função para salvar a anotação
-          saveNote() {
-            const noteText = this.noteTextarea.value.trim();
-        
-            if (noteText) {
-              const savedNote = document.createElement('div');
-              savedNote.classList.add('saved-note');
-              savedNote.textContent = noteText;
-              this.savedNotesContainer.appendChild(savedNote);
-              
-              // Limpar o textarea após salvar
-              this.noteTextarea.value = '';
-            } else {
-              alert('Por favor, insira alguma anotação!');
-            }
-          }
-        }
-        
-        // Instanciando a classe
-        const noteBlock = new NoteBlock();
-        
+// Exemplo de como você pode implementar o método deleteNote no objeto noteBlock
+const noteBlock = {
+  saveNote: function() {
+    const note = document.getElementById('note').value;
+    if (note.trim() !== '') {
+      const savedNotes = document.getElementById('savedNotes');
+      const noteElement = document.createElement('div');
+      noteElement.classList.add('saved-note');
+      noteElement.innerHTML = note + ' <button onclick="noteBlock.deleteSingleNote(this)">Deletar</button>';
+      savedNotes.appendChild(noteElement);
+      document.getElementById('note').value = ''; // Limpar a área de texto
+    }
+  },
+  
+  deleteNote: function() {
+    document.getElementById('note').value = ''; // Limpar o texto da anotação
+  },
+
+  deleteSingleNote: function(button) {
+    const noteElement = button.parentElement;
+    noteElement.remove(); // Remove a anotação específica
+  },
+
+  toggleNoteContainer: function() {
+    const container = document.getElementById('noteContainer');
+    container.style.display = container.style.display === 'none' ? 'block' : 'none';
+  }
+};
+
         
         

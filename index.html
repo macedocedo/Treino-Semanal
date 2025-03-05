@@ -32,12 +32,11 @@
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item">
-                            <a href="Resumo.html" class="nav__link active-link">Treinos</a>
+                            <a href="" class="nav__link active-link"></a>
                         </li>
                         <li class="nav__item">
                             <a href="Timer.html" class="nav__link">Timer</a>
                         </li>
-
                     </ul>
 
                     <div class="nav__close" id="nav-close">
@@ -70,7 +69,7 @@
 
             <section class="home" id="home">
                 <div class="home__container container grid">
-                    <img src="./assets/img/inipeso.jpeg" alt="" class="home__img">
+
 
                     <div class="home__data">
                         <h1 class="home__title"> Treino Semanal </h1>
@@ -122,7 +121,15 @@
             <div class="footer-content">
               <p>&copy; Mateus Macedo.</p>
             </div>
+            <button class="toggle-btn" onclick="noteBlock.toggleNoteContainer()">Abrir Bloco de Notas</button>
+            <div class="note-container" id="noteContainer">
+              <h3>Bloco de Notas</h3>
+              <textarea id="note" class="note-textarea" placeholder="Digite..."></textarea><br>
+              <button class="save-button" onclick="noteBlock.saveNote()">Salvar</button>
+              <div class="saved-notes" id="savedNotes"></div>
+            </div>
           </footer>
+          
           
 
         <!--=============== SCROLL UP ===============-->

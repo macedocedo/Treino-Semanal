@@ -879,7 +879,7 @@ body.dark-theme {
 .workout-form input {
   margin: 5px 0;
   padding: 8px;
-  width: 100px;
+  width: 240px;
 }
 
 button {
@@ -985,3 +985,15 @@ footer {
 .toggle-btn:hover {
   background-color: #202020;
 }
+
+.item-icon {
+  width: 7%;
+  height: 7%;
+  margin-left: auto;
+  margin-right: 0;
+  display: block;
+  background-color:#ffffff;
+  border-radius: 100px
+}
+
+

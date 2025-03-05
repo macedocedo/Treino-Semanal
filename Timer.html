@@ -3,171 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-
-    <!--=============== BOXICONS ===============-->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-
-    <!--=============== SWIPER CSS ===============--> 
-    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
-
-    <!--=============== CSS ===============-->
     <link rel="stylesheet" href="./css/styles1.css">
+    <title>Timer</title>
 
-    <title>Treino Semanal</title>
+    <nav class="nav container">
+        <a href="index.html" class="nav__logo">
+            <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
+            Timer
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="" class="nav__link active-link"></a>
+                </li>
+                <li class="nav__item">
+                    <a href="index.html" class="nav__link">Inicio</a>
+                </li>
+            </ul>
+
+            <div class="nav__close" id="nav-close">
+                <i class='bx bx-x' ></i>
+            </div>
+
+            <img src="assets/img/nav-light.png" alt="" class="nav__img">
+        </div>
+        <div class="nav__btns">
+
+            <!-- Toggle button -->
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-grid-alt' ></i>
+            </div>
+        </div>
+
+    </nav>
+    <style>
+
+        /* Tornar a navegação fixa no topo */
+.nav {
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Certifique-se de que o conteúdo abaixo da navegação não seja coberto */
+body {
+    padding-top: 10px; /* Ajuste conforme a altura da sua navegação */
+    margin: 5px;
+}
+
+/* Ajustar o layout do menu (se necessário) */
+.nav__menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background-color: #fff;
+    height: 100vh;
+    z-index: 1000;
+}
+
+.nav__menu.show-menu {
+    display: block;
+}
+
+.nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.nav__item {
+    margin: 20px 0;
+}
+
+.nav__link {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+}
+
+.nav__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Estilos para o botão de toggle */
+.nav__toggle {
+    display: none;
+}
+
+/* Quando a tela for pequena, o botão de toggle aparece */
+@media screen and (max-width: 768px) {
+    
+    .nav__menu {
+        position: revert;
+        background-color: var(--body-color);
+        top: 105%;
+        left: 0;
+        width: 100%;
+        padding: 4rem 0;
+        border-radius: 0 0 1.5rem 1.5rem;
+        box-shadow: 0 1px 4px hsla(0, 4%, 15%, .1);
+        height: 43vh;
+        transition: .4s;
+    }
+    .nav__toggle {
+        display: block;
+        font-size: 30px;
+        cursor: pointer;
+    }
+}
+        .unique-timer-styles {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .saved-data li button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .saved-data li button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+
 </head>
 
 <body>
-
-    <!--==================== HEADER ====================-->
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="index.html" class="nav__logo">
-                <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
-                Timer
-            </a>
-
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="index.html" class="nav__link active-link">Inicio</a>
-                    </li>
-                </ul>
-
-                <div class="nav__close" id="nav-close">
-                    <i class='bx bx-x' ></i>
-                </div>
-
-                <img src="assets/img/nav-light.png" alt="" class="nav__img">
-            </div>
-            <div class="nav__btns">
-                <!-- Theme change button -->
-                <i class='bx bx-moon change-theme' id="theme-button"></i>
-
-                <!-- Toggle button -->
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt' ></i>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!--==================== FOOTER ====================-->
     <footer class="footer section">
-        <div class="timer-container">
+        <div class="timer-container unique-timer-styles">
             <p>Descanso: <span id="timer">02:00</span></p>
             <button id="play-btn" onclick="startTimer()">Play</button>
             <button id="stop-btn" onclick="stopTimer()">Stop</button>
             <button id="reset-btn" onclick="resetTimer()">Zerar</button>
         </div>
-    
-        <div class="workout-form">
+
+        <div class="workout-form unique-timer-styles">
             <label for="exercise-name">Nome do Exercício:</label>
-            <input type="text" id="exercise-name" placeholder="Exercício" required>
-            <br>
-    
+            <input type="text" id="exercise-name" placeholder="Exercício" required><br>
             <label for="kg">Peso (kg):</label>
-            <input type="number" id="kg" placeholder="peso (kg)" required>
-            <br>
-    
+            <input type="number" id="kg" placeholder="peso (kg)" required><br>
             <label for="reps">Repetições:</label>
-            <input type="number" id="reps" placeholder="Repetições" required>
-            <br>
-    
-            <label for="sound-effect">Escolha um efeito sonoro:</label>
-            <select id="sound-effect">
-                <option value="sound1.mp3">Efeito Sonoro 1</option>
-                <option value="sound2.mp3">Efeito Sonoro 2</option>
-                <option value="sound3.mp3">Efeito Sonoro 3</option>
-            </select>
-            <br>
-    
+            <input type="number" id="reps" placeholder="Repetições" required><br>
             <button type="button" onclick="saveData()">Salvar</button>
+            <button type="button" onclick="exportCSV()">Exportar para CSV</button>
         </div>
-    
-        <div class="saved-data">
-            <h3>Dados Salvos:</h3>
+        
+        <div class="saved-data unique-timer-styles">
+            <h1>Dados Salvos:</h1>
             <ul id="data-list"></ul>
+            <button id="clear-btn" onclick="clearAllData()">Excluir Todos</button>
         </div>
     </footer>
-    
+
     <script>
+
+        // Interatividade do Menu
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navClose = document.getElementById('nav-close');
+
+        // Abrir o menu
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.add('show-menu');
+        });
+
+        // Fechar o menu
+        navClose.addEventListener('click', () => {
+            navMenu.classList.remove('show-menu');
+        });
+
+        // Função para carregar os dados salvos e atualizar o timer (já existente no seu código)
+        window.onload = function() {
+            loadSavedData();
+            updateTimerDisplay();
+        };
+
+
         // Função para carregar os dados salvos do LocalStorage
         function loadSavedData() {
             const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
             const dataList = document.getElementById('data-list');
-            dataList.innerHTML = ''; // Limpa a lista antes de adicionar os itens novamente
+            dataList.innerHTML = ''; 
 
-            // Verifica se há dados salvos
             if (savedData.length === 0) {
                 const noDataMessage = document.createElement('li');
                 noDataMessage.textContent = "Nenhum dado salvo.";
                 dataList.appendChild(noDataMessage);
             } else {
-                savedData.forEach(item => {
+                savedData.forEach((item, index) => {
                     const listItem = document.createElement('li');
-                    listItem.textContent = `Exercício: ${item.exerciseName}, Peso: ${item.kg} kg, Reps: ${item.reps}, Efeito Sonoro: ${item.soundEffect}`;
+                    listItem.textContent = `Exercício: ${item.exerciseName}, Peso: ${item.kg} kg, Reps: ${item.reps}`;
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Excluir';
+                    deleteBtn.onclick = () => deleteData(index); // Excluir com base no índice
+                    listItem.appendChild(deleteBtn);
                     dataList.appendChild(listItem);
                 });
             }
         }
-    
+
+        // Função para excluir um item específico
+        function deleteData(index) {
+            const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
+            savedData.splice(index, 1); 
+            localStorage.setItem('workoutData', JSON.stringify(savedData)); 
+            loadSavedData(); 
+        }
+
+        // Função para excluir todos os dados
+        function clearAllData() {
+            if (confirm("Tem certeza que deseja excluir todos os dados?")) {
+                localStorage.removeItem('workoutData'); 
+                loadSavedData(); 
+            }
+        }
+
         // Função para salvar os dados no LocalStorage
         function saveData() {
-            const exerciseName = document.getElementById('exercise-name').value;
-            const kg = document.getElementById('kg').value;
-            const reps = document.getElementById('reps').value;
-            const soundEffect = document.getElementById('sound-effect').value;
-    
+            const exerciseName = document.getElementById('exercise-name').value.trim();
+            const kg = document.getElementById('kg').value.trim();
+            const reps = document.getElementById('reps').value.trim();
+
             if (!exerciseName || !kg || !reps) {
                 alert("Por favor, preencha todos os campos.");
                 return;
             }
-    
-            // Cria um objeto com os dados do exercício
-            const workoutData = {
-                exerciseName: exerciseName,  // Nome do exercício
-                kg: kg,
-                reps: reps,
-                soundEffect: soundEffect
-            };
-    
-            // Recupera os dados já salvos do LocalStorage
+
+            const workoutData = { exerciseName, kg, reps };
             const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
-    
-            // Adiciona os novos dados ao array de dados salvos
             savedData.push(workoutData);
-    
-            // Salva os dados atualizados no LocalStorage
+
             localStorage.setItem('workoutData', JSON.stringify(savedData));
-    
-            // Atualiza a exibição dos dados salvos
+
             loadSavedData();
-    
-            // Toca o efeito sonoro selecionado
-            const audio = new Audio(soundEffect);
-            audio.play();
-    
-            // Limpa os campos de entrada
+
             document.getElementById('exercise-name').value = '';
             document.getElementById('kg').value = '';
             document.getElementById('reps').value = '';
-            document.getElementById('sound-effect').value = 'sound1.mp3';  // Define o valor padrão
         }
-    
+
+        // Função para exportar dados para CSV
+        function exportCSV() {
+            const savedData = JSON.parse(localStorage.getItem('workoutData')) || [];
+            const header = ['Exercício', 'Peso (kg)', 'Repetições'];
+            const rows = savedData.map(item => [item.exerciseName, item.kg, item.reps]);
+
+            const csvContent = [header, ...rows].map(row => row.join(',')).join('\n');
+            const encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'dados_treino.csv');
+            link.click();
+        }
+
+        // Funções do Timer
+        let timerInterval;
+        let timerTime = 120;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerTime / 60);
+            const seconds = timerTime % 60;
+            document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerInterval = setInterval(() => {
+                timerTime--;
+                updateTimerDisplay();
+                if (timerTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    alert('Tempo finalizado!');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            timerTime = 120;
+            updateTimerDisplay();
+        }
+
         // Carrega os dados salvos assim que a página for carregada
-        window.onload = loadSavedData;
+        window.onload = function() {
+            loadSavedData();
+            updateTimerDisplay();
+        };
     </script>
-
-    <!--=============== SCROLL REVEAL ===============-->
-    <script src="./js/scrollreveal.min.js"></script>
-
-    <!--=============== SWIPER JS ===============-->
-    <script src="./js/swiper-bundle.min.js"></script>
-
-    <!--=============== MAIN JS ===============-->
-    <script src="./js/main.js"></script>
 </body>
 </html>
