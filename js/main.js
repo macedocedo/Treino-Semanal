@@ -318,5 +318,58 @@ const noteBlock = {
   }
 };
 
-        
-        
+
+  let timer;
+  let isRunning = false;
+  let timeLeft = 120; // Tempo inicial de descanso em segundos (02:00)
+
+  // Função para atualizar o tempo no display
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+
+  // Função para iniciar o timer apenas se o checkbox for marcado
+  function startTimerIfChecked(checkbox) {
+    if (checkbox.checked) {  // Verifica se a caixa foi marcada
+      resetAndStartTimer();  // Reseta o timer e inicia a contagem
+    } else {
+      // Caso a caixa seja desmarcada, podemos simplesmente parar o temporizador
+      stopTimer();
+    }
+  }
+
+  // Função para reiniciar o timer e iniciar
+  function resetAndStartTimer() {
+    timeLeft = 120; // Reseta para 02:00
+    updateTimerDisplay();
+    
+    // Se o temporizador não estiver rodando, inicia ele
+    if (!isRunning) {
+      startTimer();
+    }
+  }
+
+  // Função para iniciar o temporizador
+  function startTimer() {
+    isRunning = true;
+    timer = setInterval(function () {
+      if (timeLeft > 0) {
+        timeLeft--;
+        updateTimerDisplay();
+      } else {
+        stopTimer();
+        alert("O tempo de descanso acabou!");
+      }
+    }, 1000); // Atualiza a cada segundo
+  }
+
+  // Função para parar o temporizador
+  function stopTimer() {
+    clearInterval(timer);
+    isRunning = false;
+  }
+
+  // Exibe o tempo inicial
+  updateTimerDisplay();
