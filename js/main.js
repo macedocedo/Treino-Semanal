@@ -373,3 +373,5 @@ const noteBlock = {
 
   // Exibe o tempo inicial
   updateTimerDisplay();
+
+  
