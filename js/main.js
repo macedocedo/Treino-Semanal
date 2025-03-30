@@ -137,10 +137,16 @@ function playSound() {
   audio.play();
 }
 
-// Função para iniciar o temporizador
+// Função para iniciar ou reiniciar o temporizador
 function startTimer() {
   let timerDisplay = document.getElementById('timer');
   let timeLeft = 2 * 60; // 2 minutos em segundos
+  
+  // Se já houver um temporizador em andamento, ele será reiniciado
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
   timerInterval = setInterval(function() {
     timeLeft--;
     let minutes = Math.floor(timeLeft / 60);
@@ -160,6 +166,11 @@ function formatTime(time) {
   return time < 10 ? '0' + time : time;
 }
 
+// Função para formatar o tempo (ex: 1:09)
+function formatTime(time) {
+  return time < 10 ? '0' + time : time;
+}
+
 // Função para parar o temporizador
 function stopTimer() {
   clearInterval(timerInterval);
@@ -171,24 +182,7 @@ function resetTimer() {
   document.getElementById('timer').textContent = '02:00';
 }
 
-// Salvar os dados de peso e repetições
-function saveData() {
-  const kg = document.getElementById("kg").value;
-  const reps = document.getElementById("reps").value;
-  
-  if (kg && reps) {
-    const dataList = document.getElementById("data-list");
-    const listItem = document.createElement("li");
-    listItem.textContent = `Peso: ${kg} kg - Repetições: ${reps}`;
-    dataList.appendChild(listItem);
-    
-    // Limpar os campos
-    document.getElementById("kg").value = "";
-    document.getElementById("reps").value = "";
-  } else {
-    alert("Por favor, preencha os campos de peso e repetições.");
-  }
-}
+
         // Função para mostrar ou esconder o bloco de notas
         function toggleNoteContainer() {
           const noteContainer = document.getElementById("noteContainer");
@@ -288,6 +282,51 @@ function saveData() {
             button.textContent = 'Tempo de Descanso';  // Alterar o texto do botão
           }
         }
+
+         // Função para salvar o estado de um checkbox no sessionStorage
+    function saveCheckboxState(checkbox) {
+      // Salva o estado (checked) do checkbox no sessionStorage usando o id como chave
+      sessionStorage.setItem(checkbox.id, checkbox.checked);
+  }
+
+  // Função para carregar o estado de um checkbox do sessionStorage
+  function loadCheckboxState(checkbox) {
+      // Recupera o estado salvo no sessionStorage e aplica no checkbox
+      var storedState = sessionStorage.getItem(checkbox.id);
+      checkbox.checked = storedState === 'true'; // Se o valor salvo for 'true', o checkbox será marcado
+  }
+
+  // Função para resetar apenas os checkboxes selecionados (marcados)
+  function resetSelectedCheckboxes() {
+      var checkboxes = document.querySelectorAll('.checkbox');
+      
+      // Desmarcar apenas os checkboxes que estão selecionados (marcados)
+      checkboxes.forEach(function(checkbox) {
+          if (checkbox.checked) {
+              checkbox.checked = false; // Desmarca o checkbox
+              saveCheckboxState(checkbox); // Salva o novo estado (desmarcado) no sessionStorage
+          }
+      });
+  }
+
+  // Chama a função de carregar os estados dos checkboxes quando a página for carregada
+  window.onload = function() {
+      var checkboxes = document.querySelectorAll('.checkbox');
+      
+      // Carrega o estado de cada checkbox individualmente
+      checkboxes.forEach(function(checkbox) {
+          loadCheckboxState(checkbox);
+          
+          // Adiciona o evento de clique para salvar o estado sempre que o checkbox for alterado
+          checkbox.addEventListener('click', function() {
+              saveCheckboxState(checkbox);
+          });
+      });
+
+      // Adiciona o evento de clique para o botão de reset
+      var resetButton = document.getElementById('reset-button');
+      resetButton.addEventListener('click', resetSelectedCheckboxes);
+  }
         
 // Exemplo de como você pode implementar o método deleteNote no objeto noteBlock
 const noteBlock = {
@@ -319,59 +358,24 @@ const noteBlock = {
 };
 
 
-  let timer;
-  let isRunning = false;
-  let timeLeft = 120; // Tempo inicial de descanso em segundos (02:00)
 
-  // Função para atualizar o tempo no display
-  function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  }
-
-  // Função para iniciar o timer apenas se o checkbox for marcado
-  function startTimerIfChecked(checkbox) {
-    if (checkbox.checked) {  // Verifica se a caixa foi marcada
-      resetAndStartTimer();  // Reseta o timer e inicia a contagem
-    } else {
-      // Caso a caixa seja desmarcada, podemos simplesmente parar o temporizador
-      stopTimer();
-    }
-  }
-
-  // Função para reiniciar o timer e iniciar
-  function resetAndStartTimer() {
-    timeLeft = 120; // Reseta para 02:00
-    updateTimerDisplay();
-    
-    // Se o temporizador não estiver rodando, inicia ele
-    if (!isRunning) {
-      startTimer();
-    }
-  }
-
-  // Função para iniciar o temporizador
-  function startTimer() {
-    isRunning = true;
-    timer = setInterval(function () {
-      if (timeLeft > 0) {
-        timeLeft--;
-        updateTimerDisplay();
-      } else {
-        stopTimer();
-        alert("O tempo de descanso acabou!");
-      }
-    }, 1000); // Atualiza a cada segundo
-  }
-
-  // Função para parar o temporizador
-  function stopTimer() {
-    clearInterval(timer);
-    isRunning = false;
-  }
-
-  // Exibe o tempo inicial
-  updateTimerDisplay();
-
+/*
+// Salvar os dados de peso e repetições
+function saveData() {
+  const kg = document.getElementById("kg").value;
+  const reps = document.getElementById("reps").value;
   
+  if (kg && reps) {
+    const dataList = document.getElementById("data-list");
+    const listItem = document.createElement("li");
+    listItem.textContent = `Peso: ${kg} kg - Repetições: ${reps}`;
+    dataList.appendChild(listItem);
+    
+    // Limpar os campos
+    document.getElementById("kg").value = "";
+    document.getElementById("reps").value = "";
+  } else {
+    alert("Por favor, preencha os campos de peso e repetições.");
+  }
+}
+*/
