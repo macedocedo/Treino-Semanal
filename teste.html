@@ -1,0 +1,91 @@
+<!--==================== GRID DE EXERCÍCIOS COM ROLAGEM HORIZONTAL ====================-->
+<div class="horizontal-scroll-container">
+    <!-- Grid de Exercícios -->
+    <div class="grid-item">
+        <img src="./assets/img/Remada curvada.gif" alt="Exercício 1">
+        <h2 class="home__title">Remada curvada</h2> 
+        <h1>Tipo: Costas</h1>
+        <h1>Séries: 3</h1>
+        <h1>Repetições: 8</h1> 
+
+        <label for="exercicio1">
+            <input type="checkbox" id="exercicio1" name="exercicio" value="exercicio1" onchange="verificarInicioTemporizador()">
+            Concluí a série 1
+            <br>
+            <input type="checkbox" id="exercicio2" name="exercicio" value="exercicio2">
+            Concluí a série 2
+            <br>
+            <input type="checkbox" id="exercicio3" name="exercicio" value="exercicio3">
+            Concluí a série 3
+        </label>
+    </div>
+
+    <button id="toggle-footer-btn" onclick="toggleFooter()">Tempo de Descanso</button>
+
+    <!-- Footer com Timer -->
+    <footer class="footer section" id="footer" style="display: none;">
+        <div class="timer-container">
+            <p>Descanso: <span id="timer">02:00</span></p>
+            <button id="play-btn" onclick="startTimer()">Play</button>
+            <button id="stop-btn" onclick="stopTimer()">Stop</button>
+            <button id="reset-btn" onclick="resetTimer()">Zerar</button>
+        </div>
+    </footer>
+</div>
+
+<script>
+// Variáveis para o temporizador
+let timerInterval;
+let timeLeft = 120; // Tempo inicial de 2 minutos (120 segundos)
+
+// Função para alternar a visibilidade do footer
+function toggleFooter() {
+    const footer = document.getElementById('footer');
+    footer.style.display = (footer.style.display === 'none') ? 'block' : 'none';
+}
+
+// Função para verificar se o temporizador deve iniciar
+function verificarInicioTemporizador() {
+    const serie1Checkbox = document.getElementById('exercicio1');
+
+    // Verifica se a Série 1 foi marcada e inicia o timer automaticamente
+    if (serie1Checkbox.checked) {
+        startTimer();
+    }
+}
+
+// Função para iniciar o temporizador
+function startTimer() {
+    if (timerInterval) return; // Se já estiver rodando, não faz nada
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+// Função para atualizar o timer
+function updateTimer() {
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        alert('O tempo de descanso terminou!');
+        return;
+    }
+
+    timeLeft--;
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+// Função para parar o temporizador
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+// Função para zerar o temporizador
+function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timeLeft = 120;
+    document.getElementById('timer').textContent = '02:00';
+}
+</script>
