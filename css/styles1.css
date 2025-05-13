@@ -295,7 +295,7 @@ body.dark-theme {
 
 /*=============== HOME ===============*/
 .home__container {
-  padding-top: 1rem;
+  padding-top: 3rem;
   row-gap: 1.5rem;
 }
 
@@ -645,7 +645,7 @@ body.dark-theme {
 /*=============== SCROLL BAR ===============*/
 ::-webkit-scrollbar {
   width: .6rem;
-  background: hsl(0, 0%, 0%);
+  background: hsla(0, 0%, 0%, 0);
   border-radius: 1rem;
 }
 
@@ -893,16 +893,13 @@ button {
 }
 
 button:hover {
-  background-color: #2eceeb;
+  background-color: #ffffff;
 }
 
 #stop-btn {
-  background-color: #b7eaf3;
+  background-color:#89938a;
 }
 
-#stop-btn:hover {
-  background-color: #2eceeb;
-}
 
 #play-btn {
   background-color: #b7eaf3;
