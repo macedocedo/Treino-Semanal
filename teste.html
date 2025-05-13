@@ -1,91 +1,174 @@
-<!--==================== GRID DE EXERCÍCIOS COM ROLAGEM HORIZONTAL ====================-->
-<div class="horizontal-scroll-container">
-    <!-- Grid de Exercícios -->
-    <div class="grid-item">
-        <img src="./assets/img/Remada curvada.gif" alt="Exercício 1">
-        <h2 class="home__title">Remada curvada</h2> 
-        <h1>Tipo: Costas</h1>
-        <h1>Séries: 3</h1>
-        <h1>Repetições: 8</h1> 
-
-        <label for="exercicio1">
-            <input type="checkbox" id="exercicio1" name="exercicio" value="exercicio1" onchange="verificarInicioTemporizador()">
-            Concluí a série 1
-            <br>
-            <input type="checkbox" id="exercicio2" name="exercicio" value="exercicio2">
-            Concluí a série 2
-            <br>
-            <input type="checkbox" id="exercicio3" name="exercicio" value="exercicio3">
-            Concluí a série 3
-        </label>
-    </div>
-
-    <button id="toggle-footer-btn" onclick="toggleFooter()">Tempo de Descanso</button>
-
-    <!-- Footer com Timer -->
-    <footer class="footer section" id="footer" style="display: none;">
-        <div class="timer-container">
-            <p>Descanso: <span id="timer">02:00</span></p>
-            <button id="play-btn" onclick="startTimer()">Play</button>
-            <button id="stop-btn" onclick="stopTimer()">Stop</button>
-            <button id="reset-btn" onclick="resetTimer()">Zerar</button>
-        </div>
-    </footer>
-</div>
-
-<script>
-// Variáveis para o temporizador
-let timerInterval;
-let timeLeft = 120; // Tempo inicial de 2 minutos (120 segundos)
-
-// Função para alternar a visibilidade do footer
-function toggleFooter() {
-    const footer = document.getElementById('footer');
-    footer.style.display = (footer.style.display === 'none') ? 'block' : 'none';
-}
-
-// Função para verificar se o temporizador deve iniciar
-function verificarInicioTemporizador() {
-    const serie1Checkbox = document.getElementById('exercicio1');
-
-    // Verifica se a Série 1 foi marcada e inicia o timer automaticamente
-    if (serie1Checkbox.checked) {
-        startTimer();
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cadastro de Exercícios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+      max-width: 500px;
+      margin: auto;
     }
-}
 
-// Função para iniciar o temporizador
-function startTimer() {
-    if (timerInterval) return; // Se já estiver rodando, não faz nada
-    timerInterval = setInterval(updateTimer, 1000);
-}
+    label {
+      display: block;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-// Função para atualizar o timer
-function updateTimer() {
-    if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        alert('O tempo de descanso terminou!');
+    select, input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .saved-data {
+      margin-top: 30px;
+    }
+
+    .saved-data h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    ul#data-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#data-list li {
+    background: #e0f2f1;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* <-- muda para coluna */
+    gap: 6px;                /* espaçamento entre linhas */
+    position: relative;
+    font-size: 16px;
+    }
+
+    .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #c62828;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="exercise-name">Nome do Exercício:</label>
+  <select id="exercise-name" required>
+    <option value="" disabled selected>Selecione um exercício</option>
+    <option value="Agachamento">Agachamento</option>
+    <option value="Supino">Supino</option>
+    <option value="Remada">Remada</option>
+    <option value="Desenvolvimento">Desenvolvimento</option>
+    <option value="Leg Press">Leg Press</option>
+  </select>
+
+  <label for="kg">Peso (kg):</label>
+  <input type="number" id="kg" placeholder="Peso (kg)" required>
+
+  <label for="reps">Repetições:</label>
+  <input type="number" id="reps" placeholder="Repetições" required>
+
+  <button type="button" onclick="saveData()">Salvar</button>
+
+  <div class="saved-data">
+    <h2>Dados Salvos:</h2>
+    <ul id="data-list"></ul>
+  </div>
+
+  <script>
+    let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
+
+    function saveData() {
+      const exercise = document.getElementById('exercise-name').value;
+      const kg = document.getElementById('kg').value;
+      const reps = document.getElementById('reps').value;
+
+      if (!exercise || !kg || !reps) {
+        alert('Preencha todos os campos antes de salvar!');
         return;
+      }
+
+      const entry = { exercise, kg, reps };
+      savedData.push(entry);
+      localStorage.setItem("treinoData", JSON.stringify(savedData));
+
+      updateList();
+      clearInputs();
     }
 
-    timeLeft--;
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
+    function deleteData(index) {
+      savedData.splice(index, 1);
+      localStorage.setItem("treinoData", JSON.stringify(savedData));
+      updateList();
+    }
 
-// Função para parar o temporizador
-function stopTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-}
+    function updateList() {
+      const list = document.getElementById('data-list');
+      list.innerHTML = '';
 
-// Função para zerar o temporizador
-function resetTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    timeLeft = 120;
-    document.getElementById('timer').textContent = '02:00';
-}
-</script>
+      savedData.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          ${item.exercise} - ${item.kg} kg - ${item.reps} reps
+          <button class="delete-btn" onclick="deleteData(${index})">🗑️</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function clearInputs() {
+      document.getElementById('exercise-name').value = '';
+      document.getElementById('kg').value = '';
+      document.getElementById('reps').value = '';
+    }
+
+    // Carrega ao abrir
+    window.onload = updateList;
+  </script>
+
+</body>
+</html>

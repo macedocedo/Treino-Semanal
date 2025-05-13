@@ -42,7 +42,7 @@
         .grid-item {
             background-color: rgba(0, 0, 0, 0);
             border-radius: 8px;
-            width: 98vw;  /* Largura maior para ocupar mais espaço */
+           /* width: 98vw;   Largura maior para ocupar mais espaço */
             max-width: 400px;  /* Largura máxima para não ficar muito grande */
             height: 80vh;  /* Altura maior para usar mais da tela */
             padding: 15px;
@@ -311,11 +311,10 @@
                 <!-- Adicione mais itens do grid conforme necessário -->
             </div>
 
-            
         </section>
     </main>
 
-<!--==================== FOOTER ====================-->
+<!--==================== FOOTER - TEMPO ====================-->
 <button id="toggle-footer-btn" onclick="toggleFooter()">Tempo de Descanso</button>
 
 <footer class="footer section" id="footer" style="display: none;">
@@ -325,26 +324,177 @@
     <button id="stop-btn" onclick="stopTimer()">Stop</button>
     <button id="reset-button" onclick="resetTimer()">Resetar boxs</button>      
   </div>
-</footer>
+  <br>
+<!--==================== FOOTER - REPETIÇÃO ====================-->
 
-  <!--
-  <div class="workout-form">
-    <label for="kg">Peso (kg):</label>
-    <input type="number" id="kg" placeholder="Digite o peso (kg)" required>
-    <br>
-    <label for="reps">Repetições:</label>
-    <input type="number" id="reps" placeholder="Digite o número de repetições" required>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
 
-    <button onclick="saveData()">Salvar</button>
-  </div>
+    label {
+      display: block;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background-color: #949694;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .saved-data {
+      margin-top: 30px;
+    }
+
+    .saved-data h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    ul#data-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#data-list li {
+    background: #828585;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* <-- muda para coluna */
+    gap: 6px;                /* espaçamento entre linhas */
+    position: relative;
+    font-size: 16px;
+    }
+
+    .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e53935;
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #c62828;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="exercise-name">Nome do Exercício:</label>
+  <select id="exercise-name" required>
+    <option value="" disabled selected>Selecione um exercício</option>
+    <option value="Agachamento">Agachamento</option>
+    <option value="Supino">Supino</option>
+    <option value="Remada">Remada</option>
+    <option value="Desenvolvimento">Desenvolvimento</option>
+    <option value="Leg Press">Leg Press</option>
+  </select>
+
+  <label for="kg">Peso (kg):</label>
+  <input type="number" id="kg" placeholder="Peso (kg)" required>
+
+  <label for="reps">Repetições:</label>
+  <input type="number" id="reps" placeholder="Repetições" required>
+
+  <button type="button" onclick="saveData()">Salvar</button>
 
   <div class="saved-data">
-    <h3>Dados Salvos:</h3>
+    <h2>Dados Salvos:</h2>
     <ul id="data-list"></ul>
   </div>
-</footer>
--->
 
+  <script>
+    let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
+
+    function saveData() {
+      const exercise = document.getElementById('exercise-name').value;
+      const kg = document.getElementById('kg').value;
+      const reps = document.getElementById('reps').value;
+
+      if (!exercise || !kg || !reps) {
+        alert('Preencha todos os campos antes de salvar!');
+        return;
+      }
+
+      const entry = { exercise, kg, reps };
+      savedData.push(entry);
+      localStorage.setItem("treinoData", JSON.stringify(savedData));
+
+      updateList();
+      clearInputs();
+    }
+
+    function deleteData(index) {
+      savedData.splice(index, 1);
+      localStorage.setItem("treinoData", JSON.stringify(savedData));
+      updateList();
+    }
+
+    function updateList() {
+      const list = document.getElementById('data-list');
+      list.innerHTML = '';
+
+      savedData.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          ${item.exercise} - ${item.kg} kg - ${item.reps} reps
+          <button class="delete-btn" onclick="deleteData(${index})">🗑️</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function clearInputs() {
+      document.getElementById('exercise-name').value = '';
+      document.getElementById('kg').value = '';
+      document.getElementById('reps').value = '';
+    }
+
+    // Carrega ao abrir
+    window.onload = updateList;
+  </script>
+
+ 
+
+
+</footer>
 
     <!--=============== SCROLL REVEAL ===============-->
     <script src="./js/scrollreveal.min.js"></script>
