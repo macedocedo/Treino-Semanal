@@ -57,7 +57,7 @@
 
         .grid-item img {
             width: 100%;
-            height: 50%;
+            height: 45%;
             object-fit: cover;  /* Garante que a imagem cubra a área do item */
             border-radius: 8px;
             margin-bottom: 10px;
@@ -276,21 +276,217 @@
 
                 </div>
 
-                <!-- Adicione mais itens do grid conforme necessário -->
+              <!-- Adicione mais itens do grid conforme necessário -->
             </div>
+            <div class="timer-container">
+              <p><span id="timer">02:00</span></p>
+            </div>
+
         </section>
     </main>
 
-    <!--==================== FOOTER ====================-->
-    <button id="toggle-footer-btn" onclick="toggleFooter()">Tempo de Descanso</button>
+<!--==================== FOOTER - TEMPO ====================-->
+<button id="toggle-footer-btn" onclick="toggleFooter()">Registro</button>
 
-    <footer class="footer section" id="footer" style="display: none;">
-      <div class="timer-container">
-        <p>Descanso: <span id="timer">02:00</span></p>
-       <!-- <button id="play-btn" onclick="startTimer()">Play</button> -->
-        <button id="stop-btn" onclick="stopTimer()">Stop</button>
-        <button id="reset-button" onclick="resetTimer()">Resetar boxs</button>
-      </div>
+<footer class="footer section" id="footer" style="display: none;">
+  <div class="timer-container">
+    
+   <!-- <button id="play-btn" onclick="startTimer()">Play</button> -->
+   <!-- <button id="stop-btn" onclick="stopTimer()">Stop</button>-->
+    <!-- <button id="reset-button" onclick="resetTimer()">Resetar boxs</button>   -->   
+  </div>
+  <br>
+<!--==================== FOOTER - REPETIÇÃO ====================-->
+
+<style>
+
+.timer-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+
+}
+
+#timer {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  background-color: #000000;
+  padding: 5px 40px;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background-color: #949694;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .saved-data {
+      margin-top: 30px;
+    }
+
+    .saved-data h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    ul#data-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#data-list li {
+    background: #828585;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* <-- muda para coluna */
+    gap: 6px;                /* espaçamento entre linhas */
+    position: relative;
+    font-size: 16px;
+    }
+
+    .delete-btn {
+    position: absolute;
+    top: -15px;
+    right: -20px;
+    background-color: #e5383500;
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #c6282800;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="exercise-name">Nome do Exercício:</label>
+  <select id="exercise-name" required>
+    <option value="Bulgaro">Bulgaro</option>
+    <option value="Agachamento livre">Agachamento livre</option>
+    <option value="Cadeira extensora">Cadeira extensora</option>
+    <option value="Leg 45">Leg 45</option>
+    <option value="Flexao nordica">Flexao nordica</option>
+    <option value="Cadeira Flexora">Cadeira Flexora</option>
+    <option value="Panturrilha">Panturrilha</option>
+  </select>
+
+  <label for="kg">Peso (kg):</label>
+  <input type="number" id="kg" placeholder="Peso (kg)" required>
+
+  <label for="reps">Repetições:</label>
+  <input type="number" id="reps" placeholder="Repetições" required>
+
+  <button type="button" onclick="saveData()">Salvar</button>
+
+  <div class="saved-data">
+    <h2>Dados Salvos:</h2>
+    <ul id="data-list"></ul>
+  </div>
+
+  <script>
+    let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
+
+    function saveData() {
+      const exercise = document.getElementById('exercise-name').value;
+      const kg = document.getElementById('kg').value;
+      const reps = document.getElementById('reps').value;
+
+      if (!exercise || !kg || !reps) {
+        alert('Preencha todos os campos antes de salvar!');
+        return;
+      }
+
+      const entry = { exercise, kg, reps };
+      savedData.push(entry);
+      localStorage.setItem("treinoData", JSON.stringify(savedData));
+
+      updateList();
+      clearInputs();
+    }
+
+    function deleteData(index) {
+      savedData.splice(index, 1);
+      localStorage.setItem("treinoData", JSON.stringify(savedData));
+      updateList();
+    }
+
+    function updateList() {
+      const list = document.getElementById('data-list');
+      list.innerHTML = '';
+
+      savedData.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          ${item.exercise} - ${item.kg} kg - ${item.reps} reps
+          <button class="delete-btn" onclick="deleteData(${index})">🗑️</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+function clearInputs() {
+  document.getElementById('exercise-name').selectedIndex = 0;
+  document.getElementById('kg').value = '';
+  document.getElementById('reps').value = '';
+}
+
+
+    // Carrega ao abrir
+    window.onload = updateList;
+    document.addEventListener("DOMContentLoaded", updateList);
+
+  </script>
+</footer>
 
     <!--=============== SCROLL REVEAL ===============-->
     <script src="./js/scrollreveal.min.js"></script>
@@ -302,3 +498,4 @@
     <script src="./js/main.js"></script>
 </body>
 </html>
+

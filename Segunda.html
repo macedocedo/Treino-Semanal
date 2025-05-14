@@ -27,7 +27,8 @@
             padding: 20px;
             scroll-snap-type: x mandatory;  /* Permite um "efeito de clique" suave quando rolar */
             width: 100vw;  /* Preenche toda a largura da tela */
-            height: 88vh;  /* Preenche toda a altura da tela */
+            height: 80vh;  /* Preenche toda a altura da tela */
+            scroll-behavior: smooth;
         }
 
         .horizontal-scroll-container::-webkit-scrollbar {
@@ -42,14 +43,14 @@
         .grid-item {
             background-color: rgba(0, 0, 0, 0);
             border-radius: 8px;
-           /* width: 98vw;   Largura maior para ocupar mais espaço */
+            width: 89vw;  /* Largura maior para ocupar mais espaço */
             max-width: 400px;  /* Largura máxima para não ficar muito grande */
-            height: 80vh;  /* Altura maior para usar mais da tela */
-            padding: 15px;
+            padding: 16px;
+            display: table-column;
+            scroll-snap-align: center;
             text-align: center;
             scroll-snap-align: start;  /* Alinha o item quando for rolado */
             flex-shrink: 0;  /* Impede que os itens encolham */
-            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -57,7 +58,7 @@
 
         .grid-item img {
             width: 100%;
-            height: 50%;
+            height: 45%;
             object-fit: cover;  /* Garante que a imagem cubra a área do item */
             border-radius: 8px;
             margin-bottom: 10px;
@@ -146,7 +147,7 @@
                         <input type="checkbox" class="checkbox" id="box-input2" onclick="startTimer()"> Concluí a série 2
                         <br>
                         <input type="checkbox" class="checkbox" id="box-input3" onclick="startTimer()"> Concluí a série 3
-                        <br>
+                      
                    
                     </div>
                  
@@ -338,15 +339,15 @@
 }
 
 #timer {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
   color: #ffffff;
   text-align: center;
-  background-color: #472929;
-  padding: 8px 30px;
-  border-radius: 8px;
+  background-color: #000000;
+  padding: 5px 40px;
+  border-radius: 10px;
   font-family: 'Courier New', monospace;
-  box-shadow: 0 0 10px rgba(255, 77, 77, 0.7);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
 }
 
 
@@ -418,9 +419,9 @@
 
     .delete-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #e53935;
+    top: -15px;
+    right: -20px;
+    background-color: #e5383500;
     color: rgb(0, 0, 0);
     border: none;
     width: 32px;
@@ -433,7 +434,7 @@
     }
 
     .delete-btn:hover {
-      background-color: #c62828;
+      background-color: #c6282800;
     }
   </style>
 </head>
@@ -441,12 +442,11 @@
 
   <label for="exercise-name">Nome do Exercício:</label>
   <select id="exercise-name" required>
-    <option value="" disabled selected>Selecione um exercício</option>
-    <option value="Agachamento">Agachamento</option>
-    <option value="Supino">Supino</option>
-    <option value="Remada">Remada</option>
-    <option value="Desenvolvimento">Desenvolvimento</option>
-    <option value="Leg Press">Leg Press</option>
+    <option value="Remada curvada">Remada curvada</option>
+    <option value="Remada baixa maquina">Remada baixa maquina</option>
+    <option value="Costas Pull down">Costas Pull down</option>
+    <option value="Costas Pulley aberto">Costas Pulley aberto</option>
+    <option value="Costas Pulley neutro">Costas Pulley neutro</option>
   </select>
 
   <label for="kg">Peso (kg):</label>
@@ -503,19 +503,18 @@
       });
     }
 
-    function clearInputs() {
-      document.getElementById('exercise-name').value = '';
-      document.getElementById('kg').value = '';
-      document.getElementById('reps').value = '';
-    }
+function clearInputs() {
+  document.getElementById('exercise-name').selectedIndex = 0;
+  document.getElementById('kg').value = '';
+  document.getElementById('reps').value = '';
+}
+
 
     // Carrega ao abrir
     window.onload = updateList;
+    document.addEventListener("DOMContentLoaded", updateList);
+
   </script>
-
- 
-
-
 </footer>
 
     <!--=============== SCROLL REVEAL ===============-->
