@@ -42,14 +42,13 @@
         .grid-item {
             background-color: rgba(0, 0, 0, 0);
             border-radius: 8px;
-            width: 89vw;  /* Largura maior para ocupar mais espaço */
+            width: 92vw;  /* Largura maior para ocupar mais espaço */
             max-width: 400px;  /* Largura máxima para não ficar muito grande */
-            padding: 16px;
-            display: table-column;
-            scroll-snap-align: center;
+            height: 80vh;  /* Altura maior para usar mais da tela */
             text-align: center;
             scroll-snap-align: start;  /* Alinha o item quando for rolado */
             flex-shrink: 0;  /* Impede que os itens encolham */
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -433,7 +432,7 @@
     <option value="Pushdown unilateral">Pushdown unilateral</option>
     <option value="Dips">Dips</option>
 
-  <label for="kg">Peso (kg):</label>
+ <label for="kg">Peso (kg):</label>
   <input type="number" id="kg" placeholder="Peso (kg)" required>
 
   <label for="reps">Repetições:</label>
@@ -511,4 +510,3 @@ function clearInputs() {
     <script src="./js/main.js"></script>
 </body>
 </html>
-

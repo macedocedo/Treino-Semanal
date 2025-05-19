@@ -18,7 +18,7 @@
 
     <title>Treino Semanal</title>
 
-    <style>
+ <style>
         /* Estilos para a rolagem horizontal */
         .horizontal-scroll-container {
             display: flex;
@@ -27,8 +27,7 @@
             padding: 20px;
             scroll-snap-type: x mandatory;  /* Permite um "efeito de clique" suave quando rolar */
             width: 100vw;  /* Preenche toda a largura da tela */
-            height: 80vh;  /* Preenche toda a altura da tela */
-            scroll-behavior: smooth;
+            height: 88vh;  /* Preenche toda a altura da tela */
         }
 
         .horizontal-scroll-container::-webkit-scrollbar {
@@ -43,14 +42,13 @@
         .grid-item {
             background-color: rgba(0, 0, 0, 0);
             border-radius: 8px;
-            width: 89vw;  /* Largura maior para ocupar mais espaço */
+            width: 92vw;  /* Largura maior para ocupar mais espaço */
             max-width: 400px;  /* Largura máxima para não ficar muito grande */
-            padding: 16px;
-            display: table-column;
-            scroll-snap-align: center;
+            height: 80vh;  /* Altura maior para usar mais da tela */
             text-align: center;
             scroll-snap-align: start;  /* Alinha o item quando for rolado */
             flex-shrink: 0;  /* Impede que os itens encolham */
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
