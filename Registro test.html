@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!--=============== SWIPER CSS ===============--> 
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="./css/styles1.css">
+
+    <title>Treino Semanal</title>
+
+ <style>
+        /* Estilos para a rolagem horizontal */
+        .horizontal-scroll-container {
+            display: flex;
+            overflow-x: auto;  /* Permite rolar horizontalmente */
+            gap: 20px;  /* Espaço entre os itens */
+            padding: 20px;
+            scroll-snap-type: x mandatory;  /* Permite um "efeito de clique" suave quando rolar */
+            width: 100vw;  /* Preenche toda a largura da tela */
+            height: 88vh;  /* Preenche toda a altura da tela */
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar {
+            height: 8px; /* Tamanho da barra de rolagem */
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+            background-color: #ffffff00;  /* Cor da barra de rolagem */
+            border-radius: 10px;
+        }
+
+        .grid-item {
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 8px;
+            width: 92vw;  /* Largura maior para ocupar mais espaço */
+            max-width: 400px;  /* Largura máxima para não ficar muito grande */
+            height: 80vh;  /* Altura maior para usar mais da tela */
+            text-align: center;
+            scroll-snap-align: start;  /* Alinha o item quando for rolado */
+            flex-shrink: 0;  /* Impede que os itens encolham */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 45%;
+            object-fit: cover;  /* Garante que a imagem cubra a área do item */
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .grid-item h2 {
+            font-size: 32px;  /* Tamanho maior para o título */
+            margin-bottom: 10px;
+        }
+
+        .grid-item p {
+            font-size: 18px;  /* Tamanho maior para o texto */
+            color: #000000;
+            max-width: 90%;  /* Limita a largura do texto */
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--==================== HEADER ====================-->
+
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo">
+                <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
+                Registro
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="index.html" class="nav__link active-link">Inicio</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="Resumo.html" class="nav__link active-link">Treinos</a>
+                    </li>
+                </ul>
+
+                <div class="nav__close" id="nav-close">
+                    <i class='bx bx-x' ></i>
+                </div>
+
+                <img src="assets/img/nav-light.png" alt="" class="nav__img">
+            </div>
+            <div class="nav__btns">
+
+                <!-- Theme change button -->
+
+                <i class='bx bx-moon change-theme' id="theme-button"></i>
+
+                <!-- Toggle button -->
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-grid-alt' ></i>
+                </div>
+            </div>
+
+        </nav>
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <section class="home" id="home">
+            <div class="home__container container">
+                <h1 class="home__title"> Registro  </h1>
+            </div>
+            
+            <!--==================== bloco de REGISTRO ====================-->
+
+
+                <!-- Adicione mais itens do grid conforme necessário -->
+            </div>
+        </section>
+    </main>
+
+<!--==================== FOOTER - TEMPO ====================-->
+<button id="toggle-footer-btn" onclick="toggleFooter()">Registro</button>
+
+<footer class="footer section" id="footer" style="display: none;">
+  <div class="timer-container">
+    
+   <!-- <button id="play-btn" onclick="startTimer()">Play</button> -->
+   <!-- <button id="stop-btn" onclick="stopTimer()">Stop</button>-->
+    <!-- <button id="reset-button" onclick="resetTimer()">Resetar boxs</button>   -->   
+  </div>
+  <br>
+<!--==================== FOOTER - REPETIÇÃO ====================-->
+<!-- Selecionar Data -->
+<label for="select-date">Selecionar Data:</label>
+<select id="select-date" onchange="updateList()">
+  <option value="">Todas as datas</option>
+</select>
+
+  <!-- Filtro por exercício -->
+<label for="select-exercise">Selecionar Exercício:</label>
+<select id="select-exercise" onchange="updateList()">
+  <option value="">Todos os exercícios</option>
+</select>
+
+
+<style>
+
+.timer-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+
+}
+
+#timer {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  background-color: #000000;
+  padding: 5px 40px;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background-color: #949694;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .saved-data {
+      margin-top: 30px;
+    }
+
+    .saved-data h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    ul#data-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#data-list li {
+    background: #828585;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* <-- muda para coluna */
+    gap: 6px;                /* espaçamento entre linhas */
+    position: relative;
+    font-size: 16px;
+    }
+
+    .delete-btn {
+    position: absolute;
+    top: -15px;
+    right: -20px;
+    background-color: #e5383500;
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #c6282800;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="saved-data">
+    <h2>Dados Salvos:</h2>
+    <ul id="data-list"></ul>
+  </div>
+
+  <script>
+
+let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
+
+    function saveData() {
+  const exercise = document.getElementById('exercise-name').value;
+  const kg = document.getElementById('kg').value;
+  const reps = document.getElementById('reps').value;
+  const hoje = new Date().toISOString().split('T')[0];
+
+  if (!exercise || !kg || !reps) {
+    alert('Preencha todos os campos antes de salvar!');
+    return;
+  }
+
+  const entry = { exercise, kg, reps, data: hoje };
+  savedData.push(entry);
+  localStorage.setItem("treinoData", JSON.stringify(savedData));
+
+  // ⚠️ Atualiza os filtros e a lista depois de salvar
+  updateDateSelector();
+  updateList();
+  clearInputs();
+}
+
+
+function deleteData(index) {
+  if (confirm("Deseja realmente excluir este registro?")) {
+    savedData.splice(index, 1);
+    localStorage.setItem("treinoData", JSON.stringify(savedData));
+    refreshFiltersAndList();
+  }
+}
+
+
+function updateList() {
+  const list = document.getElementById('data-list');
+  list.innerHTML = '';
+
+  const selectedDate = document.getElementById('select-date').value;
+  const selectedExercise = document.getElementById('select-exercise').value;
+
+  // Filtrar os dados com base na data e no exercício
+  const dadosFiltrados = savedData
+    .map((item, index) => ({ ...item, index })) // Inclui o índice para o botão de deletar
+    .filter(item => {
+      const matchDate = !selectedDate || item.data === selectedDate;
+      const matchExercise = !selectedExercise || item.exercise === selectedExercise;
+      return matchDate && matchExercise;
+    });
+
+  if (dadosFiltrados.length === 0) {
+    list.innerHTML = '<p>Nenhum dado encontrado para os filtros selecionados.</p>';
+    return;
+  }
+
+  // Agrupar por data
+  const dadosPorDia = {};
+  dadosFiltrados.forEach(item => {
+    if (!dadosPorDia[item.data]) dadosPorDia[item.data] = [];
+    dadosPorDia[item.data].push(item);
+  });
+
+  // Ordenar as datas (decrescente)
+  const datasOrdenadas = Object.keys(dadosPorDia).sort((a, b) => b.localeCompare(a));
+
+  datasOrdenadas.forEach(data => {
+    const tituloDia = document.createElement('h3');
+    tituloDia.textContent = `📅 ${data}`;
+    list.appendChild(tituloDia);
+
+    dadosPorDia[data].forEach(item => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${item.exercise} - ${item.kg} kg - ${item.reps} reps
+        <button class="delete-btn" onclick="deleteData(${item.index})">🗑️</button>
+      `;
+      list.appendChild(li);
+    });
+  });
+}
+
+
+function updateDateSelector() {
+  const selectorDate = document.getElementById('select-date');
+  const selectorExercise = document.getElementById('select-exercise');
+
+  if (!selectorDate || !selectorExercise) return;
+
+  const uniqueDates = [...new Set(savedData.map(item => item.data))].sort((a, b) => b.localeCompare(a));
+  const uniqueExercises = [...new Set(savedData.map(item => item.exercise))].sort();
+
+  // Preencher seletor de datas
+  selectorDate.innerHTML = '<option value="">Todas as datas</option>';
+  uniqueDates.forEach(date => {
+    const opt = document.createElement('option');
+    opt.value = date;
+    opt.textContent = date;
+    selectorDate.appendChild(opt);
+  });
+
+  // Preencher seletor de exercícios
+  selectorExercise.innerHTML = '<option value="">Todos os exercícios</option>';
+  uniqueExercises.forEach(exercise => {
+    const opt = document.createElement('option');
+    opt.value = exercise;
+    opt.textContent = exercise;
+    selectorExercise.appendChild(opt);
+  });
+}
+
+window.onload = function() {
+  refreshFiltersAndList();
+};
+
+
+function refreshFiltersAndList() {
+  updateDateSelector();
+  updateList();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  refreshFiltersAndList();
+});
+
+
+
+    // Carrega ao abrir
+    window.onload = updateList;
+    document.addEventListener("DOMContentLoaded", updateList);
+</script>
+
+</footer>
+
+    <!--=============== SCROLL REVEAL ===============-->
+    <script src="./js/scrollreveal.min.js"></script>
+
+    <!--=============== SWIPER JS ===============-->
+    <script src="./js/swiper-bundle.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="./js/main.js"></script>
+</body>
+</html>
+

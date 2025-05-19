@@ -295,59 +295,7 @@ function resetTimer() {
           });
       });
 
-      // Adiciona o evento de clique para o botão de reset
-      //var resetButton = document.getElementById('reset-button');
-     // resetButton.addEventListener('click', resetSelectedCheckboxes);
+
   }
         
-// Exemplo de como você pode implementar o método deleteNote no objeto noteBlock
-const noteBlock = {
-  saveNote: function() {
-    const note = document.getElementById('note').value;
-    if (note.trim() !== '') {
-      const savedNotes = document.getElementById('savedNotes');
-      const noteElement = document.createElement('div');
-      noteElement.classList.add('saved-note');
-      noteElement.innerHTML = note + ' <button onclick="noteBlock.deleteSingleNote(this)">Deletar</button>';
-      savedNotes.appendChild(noteElement);
-      document.getElementById('note').value = ''; // Limpar a área de texto
-    }
-  },
-  
-  deleteNote: function() {
-    document.getElementById('note').value = ''; // Limpar o texto da anotação
-  },
 
-  deleteSingleNote: function(button) {
-    const noteElement = button.parentElement;
-    noteElement.remove(); // Remove a anotação específica
-  },
-
-  toggleNoteContainer: function() {
-    const container = document.getElementById('noteContainer');
-    container.style.display = container.style.display === 'none' ? 'block' : 'none';
-  }
-};
-
-
-
-/*
-// Salvar os dados de peso e repetições
-function saveData() {
-  const kg = document.getElementById("kg").value;
-  const reps = document.getElementById("reps").value;
-  
-  if (kg && reps) {
-    const dataList = document.getElementById("data-list");
-    const listItem = document.createElement("li");
-    listItem.textContent = `Peso: ${kg} kg - Repetições: ${reps}`;
-    dataList.appendChild(listItem);
-    
-    // Limpar os campos
-    document.getElementById("kg").value = "";
-    document.getElementById("reps").value = "";
-  } else {
-    alert("Por favor, preencha os campos de peso e repetições.");
-  }
-}
-*/
