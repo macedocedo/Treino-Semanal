@@ -456,63 +456,65 @@
   <button type="button" onclick="saveData()">Salvar</button>
 
   <div class="saved-data">
-    <h2>Dados Salvos:</h2>
     <ul id="data-list"></ul>
   </div>
 
-  <script>
-    let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
+<script>
 
-    function saveData() {
-      const exercise = document.getElementById('exercise-name').value;
-      const kg = document.getElementById('kg').value;
-      const reps = document.getElementById('reps').value;
 
-      if (!exercise || !kg || !reps) {
-        alert('Preencha todos os campos antes de salvar!');
-        return;
-      }
+  let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
 
-      const entry = { exercise, kg, reps };
-      savedData.push(entry);
-      localStorage.setItem("treinoData", JSON.stringify(savedData));
+  function saveData() {
+    const exercise = document.getElementById('exercise-name').value;
+    const kg = document.getElementById('kg').value;
+    const reps = document.getElementById('reps').value;
+    const hoje = new Date().toISOString().split('T')[0]; // captura a data atual
 
-      updateList();
-      clearInputs();
+    if (!exercise || !kg || !reps) {
+      alert('Preencha todos os campos antes de salvar!');
+      return;
     }
 
-    function deleteData(index) {
-      savedData.splice(index, 1);
-      localStorage.setItem("treinoData", JSON.stringify(savedData));
-      updateList();
-    }
+    const entry = { exercise, kg, reps, data: hoje }; // salva com a data
+    savedData.push(entry);
+    localStorage.setItem("treinoData", JSON.stringify(savedData));
 
-    function updateList() {
-      const list = document.getElementById('data-list');
-      list.innerHTML = '';
+    updateList();
+    clearInputs();
+  }
 
-      savedData.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          ${item.exercise} - ${item.kg} kg - ${item.reps} reps
-          <button class="delete-btn" onclick="deleteData(${index})">🗑️</button>
-        `;
-        list.appendChild(li);
-      });
-    }
+  function deleteData(index) {
+    savedData.splice(index, 1);
+    localStorage.setItem("treinoData", JSON.stringify(savedData));
+    updateList();
+  }
 
-function clearInputs() {
-  document.getElementById('exercise-name').selectedIndex = 0;
-  document.getElementById('kg').value = '';
-  document.getElementById('reps').value = '';
-}
+  function updateList() {
+    const list = document.getElementById('data-list');
+    list.innerHTML = '';
+
+    savedData.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        📅 ${item.data} — ${item.exercise} - ${item.kg} kg - ${item.reps} reps
+        <button class="delete-btn" onclick="deleteData(${index})">🗑️</button>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  function clearInputs() {
+    document.getElementById('exercise-name').selectedIndex = 0;
+    document.getElementById('kg').value = '';
+    document.getElementById('reps').value = '';
+  }
+
+  // Carrega ao abrir
+  window.onload = updateList;
+
+</script>
 
 
-    // Carrega ao abrir
-    window.onload = updateList;
-    document.addEventListener("DOMContentLoaded", updateList);
-
-  </script>
 </footer>
 
     <!--=============== SCROLL REVEAL ===============-->
