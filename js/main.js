@@ -102,6 +102,7 @@ sr.reveal(`.celebrate__data, .message__form, .footer__img1`,{origin: 'left'})
 sr.reveal(`.celebrate__img, .message__img, .footer__img2`,{origin: 'right'})
 
 let timerInterval;
+let selectedTime = 2 * 60; // Tempo padrão: 2 minutos
 let audio = new Audio('./assets/tistreza.mp3'); // Caminho para o arquivo de áudio
 
 // Função para tocar o som
@@ -112,30 +113,23 @@ function playSound() {
 // Função para iniciar ou reiniciar o temporizador
 function startTimer() {
   let timerDisplay = document.getElementById('timer');
-  let timeLeft = 2 * 60; // 2 minutos em segundos
-  
-  // Se já houver um temporizador em andamento, ele será reiniciado
+  let timeLeft = selectedTime;
+
   if (timerInterval) {
     clearInterval(timerInterval);
   }
 
-  timerInterval = setInterval(function() {
+  timerInterval = setInterval(function () {
     timeLeft--;
     let minutes = Math.floor(timeLeft / 60);
     let seconds = timeLeft % 60;
     timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
 
-    // Verifica se o tempo chegou a zero
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       playSound(); // Toca o som quando o tempo zerar
     }
   }, 1000);
-}
-
-// Função para formatar o tempo (ex: 1:09)
-function formatTime(time) {
-  return time < 10 ? '0' + time : time;
 }
 
 // Função para formatar o tempo (ex: 1:09)
@@ -151,8 +145,22 @@ function stopTimer() {
 // Função para zerar o temporizador
 function resetTimer() {
   clearInterval(timerInterval);
-  document.getElementById('timer').textContent = '02:00';
+  document.getElementById('timer').textContent = `${formatTime(selectedTime / 60)}:00`;
 }
+
+
+// Funções para controle do tempo customizado
+function toggleTimeOptions() {
+  const options = document.getElementById('time-options');
+  options.style.display = options.style.display === 'none' ? 'block' : 'none';
+}
+
+function setTimer(minutes) {
+  selectedTime = minutes * 60;
+  resetTimer(); // Reinicia o temporizador ao escolher um novo tempo
+  toggleTimeOptions();
+}
+
 
 
         // Função para mostrar ou esconder o bloco de notas

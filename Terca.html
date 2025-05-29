@@ -296,8 +296,19 @@
               <p><span id="timer">02:00</span></p>
             </div>
 
-        </section>
-    </main>
+        <br>
+        <div class="timer-controls">
+          <button onclick="toggleTimeOptions()">⏱️ Escolher Tempo</button>
+          <div id="time-options" style="display: none; margin-top: 10px;">
+            <button onclick="setTimer(1)">1 Minuto</button>
+            <button onclick="setTimer(2)">2 Minutos</button>
+            <button onclick="setTimer(3)">3 Minutos</button>
+          </div>
+        </div>
+                </section>
+            </main>
+
+
 
 <!--==================== FOOTER - TEMPO ====================-->
 <button id="toggle-footer-btn" onclick="toggleFooter()">Registro</button>

@@ -311,9 +311,18 @@
               <p><span id="timer">02:00</span></p>
             </div>
 
-        </section>
-    </main>
-
+        <br>
+        <div class="timer-controls">
+          <button onclick="toggleTimeOptions()">⏱️ Escolher Tempo</button>
+          <div id="time-options" style="display: none; margin-top: 10px;">
+            <button onclick="setTimer(1)">1 Minuto</button>
+            <button onclick="setTimer(2)">2 Minutos</button>
+            <button onclick="setTimer(3)">3 Minutos</button>
+          </div>
+        </div>
+                </section>
+            </main>
+    
 <!--==================== FOOTER - TEMPO ====================-->
 <button id="toggle-footer-btn" onclick="toggleFooter()">Registro</button>
 
@@ -434,6 +443,22 @@
     .delete-btn:hover {
       background-color: #c6282800;
     }
+
+    .timer-controls button {
+  margin: 1px;
+  padding: 6px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+}
+
+.timer-controls button:hover {
+  background-color: #666;
+}
+
   </style>
 </head>
 <body>
