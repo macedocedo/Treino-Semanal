@@ -1,138 +1,174 @@
 <!DOCTYPE html>
-    <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicativo LogNext para controle logístico">
 
-        <!--=============== FAVICON ===============-->
-        <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 
-        <!--=============== BOXICONS ===============-->
-        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
-        <!--=============== SWIPER CSS ===============--> 
-        <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
 
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="./css/styles1.css">
+    <!--=============== CUSTOM CSS ===============-->
+    <link rel="stylesheet" href="./css/styles1.css">
 
-        <title>Treino Semanal</title>
-    </head>
-    <body>
+    <style>
+        /* Estilos aprimorados para centralização e layout */
+        @media screen and (min-width: 768px) {
+            .home,
+            .celebrate {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 38vh;
+            }
 
-        <!--==================== HEADER ====================-->
+            .home__buttons,
+            .footer__links {
+                display: flex;
+                justify-content: center;
+                gap: 1.5rem;
+                margin-top: 2rem;
+                flex-wrap: wrap;
+            }
 
-        <header class="header" id="header">
-            <nav class="nav container">
-                <a href="#" class="nav__logo">
-                    <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
-                    Treino Semanal
-                </a>
+            .home__container,
+            .celebrate__container {
+                max-width: 900px;
+                width: 100%;
+                padding: 0 1.5rem;
+            }
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="" class="nav__link active-link"></a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="Registro.html" class="nav__link">Registro</a>
-                        </li>
-                    </ul>
+            .home__container.grid,
+            .celebrate__container.grid {
+                display: block;
+            }
+        }
 
-                    <div class="nav__close" id="nav-close">
-                        <i class='bx bx-x' ></i>
-                    </div>
+        /* Melhorias para mobile */
+        @media screen and (max-width: 767px) {
+            .home__buttons,
+            .footer__links {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+            
+            .button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 
-                    <img src="assets/img/nav-light.png" alt="" class="nav__img">
+    <title>LogNext - Controle Logístico</title>
+</head>
+
+<body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                <img src="assets/img/favicon.png" alt="Logo LogNext" class="nav__logo-img">
+                LogNext
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#" class="nav__link active-link">Início</a></li>
+                    <li class="nav__item"><a href="Lista.html" class="nav__link">Lista</a></li>
+                    <li class="nav__item"><a href="Cliente.html" class="nav__link">Clientes</a></li>
+                    <li class="nav__item"><a href="Filtro.html" class="nav__link">Cálculo</a></li>
+                    <li class="nav__item"><a href="Estoque-Saida.html" class="nav__link">Estoque-Saída</a></li>
+                    <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Estoque-Entrada</a></li>
+                </ul>
+
+                <div class="nav__close" id="nav-close">
+                    <i class='bx bx-x'></i>
                 </div>
-                <div class="nav__btns">
-
-                    <!-- Theme change button -->
-
-                    <i class='bx bx-moon change-theme' id="theme-button"></i>
-
-                    <!-- Toggle button -->
-
-                    <div class="nav__toggle" id="nav-toggle">
-                        <i class='bx bx-grid-alt' ></i>
-                    </div>
-                </div>
-
-            </nav>
-        </header>
-
-        <!--==================== MAIN ====================-->
-
-        <main class="main">
-
-            <!--==================== HOME ====================-->
-
-            <section class="home" id="home">
-                <div class="home__container container grid">
-
-
-                    <div class="home__data">
-                        <h1 class="home__title"> Treino Semanal </h1>
-                        <p class="home__description">
-                            Aplicativo desenvolvido para auxiliar nos treinos semanais, oferecendo orientações detalhadas sobre a execução correta dos exercícios.
-                        </p>
-                        <a href="Registro.html" class="button">Registro</a>
-                    </div>
-                </div>
-            </section>
-
-            <!--==================== GIVING ====================-->
-
-
-            <!--==================== CELEBRATE ====================-->
-
-            <section class="celebrate section container" id="celebrate">
-                <div class="celebrate__container grid">
-                    <div class="celebrate__data">
-                        <div class="nav__togglee" id="nav__toggle"></div>
-                        <div>
-                            <h1 class="footer__title">Treino</h1>
-        
-                            <ul class="footer__links">
-                                <li>
-                                    <a href="index masc.html" class="button">Masculino</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="index fem.html" class="button">Feminino</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        <!--==================== FOOTER ====================-->
-
-        <footer class="footer">
-            <div class="footer-content">
-              <p>&copy; Mateus Macedo.</p>
             </div>
-          </footer>
-          
-          
 
-        <!--=============== SCROLL UP ===============-->
+            <div class="nav__btns">
+                <i class='bx bx-moon change-theme' id="theme-button" title="Alternar tema"></i>
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-grid-alt' title="Menu"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-        <a href="#" class="scrollup" id="scroll-up"> 
-            <i class='bx bx-up-arrow-alt scrollup__icon' ></i>
-        </a>
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <!--==================== HERO SECTION ====================-->
+        <section class="home" id="home">
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <h1 class="home__title">LogNext</h1>
+                    <p class="home__description">
+                        Aplicativo desenvolvido para auxiliar no controle logístico, oferecendo uma gestão detalhada e eficiente dos processos operacionais.
+                    </p>
+                    <div class="home__buttons">
+                        <a href="Estoque-Saida.html" class="button button--primary">
+                            <i class='bx bx-log-out'></i> Saída
+                        </a>
+                        <a href="Estoque-Entrada.html" class="button button--primary">
+                            <i class='bx bx-log-in'></i> Entrada
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!--=============== SCROLL REVEAL ===============-->
+        <!--==================== PROCEDURES SECTION ====================-->
+        <section class="celebrate section container" id="celebrate">
+            <div class="celebrate__container grid">
+                <div class="celebrate__data">
+                    <h2 class="section__title">Procedimentos</h2>
+                    <div class="footer__links">
+                        <a href="Venda.html" class="button">
+                            <i class='bx bx-cart'></i> Venda
+                        </a>
+                        <a href="Cliente.html" class="button">
+                            <i class='bx bx-user'></i> Cliente
+                        </a>
+                        <a href="Lista.html" class="button">
+                            <i class='bx bx-list-ul'></i> Lista
+                        </a>
+                        <a href="Filtro.html" class="button">
+                            <i class='bx bx-calculator'></i> Cálculo
+                        </a>              
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <script src="./js/scrollreveal.min.js"></script>
+    <!--==================== FOOTER ====================-->
+    <footer class="footer section">
+        <div class="footer__container container">
+            <p class="footer__copy">&copy; <span id="year"></span> Mateus Macedo. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
-        <!--=============== SWIPER JS ===============-->
+    <!--==================== SCROLL UP ====================-->
+    <a href="#" class="scrollup" id="scroll-up" aria-label="Voltar ao topo">
+        <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+    </a>
 
-        <script src="./js/swiper-bundle.min.js"></script>
-
-        <!--=============== MAIN JS ===============-->
-
-        <script src="./js/main.js"></script>
-    </body>
-</html> 
+    <!--=============== SCRIPTS ===============-->
+    <script src="./js/scrollreveal.min.js"></script>
+    <script src="./js/swiper-bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+    
+    <script>
+        // Atualiza o ano no footer automaticamente
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
