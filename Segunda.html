@@ -88,37 +88,7 @@
         #vibrate-btn.vibrating {
           background-color: #777; /* Cinza quando desativado */
         }
- /* Ajustes para smartwatch */
-  body {
-    font-size: 14px;
-    padding: 5px;
-    margin: 0;
-    overflow: hidden;
-  }
 
-  .grid-item {
-    width: 95vw;
-    height: 70vh;
-    padding: 5px;
-  }
-
-  .grid-item img {
-    height: 30%;
-  }
-
-  .grid-item h2 {
-    font-size: 18px;
-  }
-
-  #timer {
-    font-size: 2rem;
-    padding: 5px 20px;
-  }
-
-  button {
-    padding: 8px;
-    font-size: 14px;
-  }
         
     </style>
 </head>
@@ -533,7 +503,7 @@
   </div>
 
 <script>
-  // Variáveis globais para o timer
+ // Variáveis globais para o timer
   let timerInterval;
   let totalSeconds = 120; // 2 minutos padrão
   let vibrationEnabled = true;
@@ -568,35 +538,50 @@
     }
   });
 
-  // Função para vibrar o dispositivo
+  // Função para vibrar o dispositivo (compatível com smartwatches)
   function vibrateDevice() {
     if (!vibrationEnabled) return;
     
+    // Padrão de vibração mais longo para smartwatches
+    const vibrationPattern = [1000, 500, 1000, 500, 1000];
+    
     // Verifica se a API de vibração está disponível
     if ('vibrate' in navigator) {
-      // Vibra por 1 segundo, pausa por 0.5s, vibra por 1s (padrão de alerta)
-      navigator.vibrate([1000, 500, 1000]);
+      try {
+        // Tenta vibrar com o padrão especificado
+        navigator.vibrate(vibrationPattern);
+      } catch (e) {
+        console.error('Erro ao vibrar:', e);
+      }
     }
     
-    // Se não conseguir vibrar ou se a vibração não funcionar com tela bloqueada,
-    // usamos uma notificação como fallback
+    // Fallback para notificações em smartwatches
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('Tempo esgotado!', {
-        body: 'O tempo do seu descanso acabou!',
-        icon: './assets/img/favicon.png'
-      });
+      try {
+        new Notification('Tempo esgotado!', {
+          body: 'O tempo do seu descanso acabou!',
+          icon: './assets/img/favicon.png',
+          vibrate: vibrationPattern // Alguns smartwatches podem respeitar isso
+        });
+      } catch (e) {
+        console.error('Erro ao mostrar notificação:', e);
+      }
     }
     
-    // Também tocamos um som (opcional)
+    // Fallback para som (opcional)
     playAlertSound();
   }
 
   // Função para tocar um som de alerta
   function playAlertSound() {
-    const audio = new Audio();
-    audio.src = 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3';
-    audio.volume = 0.5;
-    audio.play().catch(e => console.error('Erro ao reproduzir som:', e));
+    try {
+      const audio = new Audio();
+      audio.src = 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3';
+      audio.volume = 0.5;
+      audio.play().catch(e => console.error('Erro ao reproduzir som:', e));
+    } catch (e) {
+      console.error('Erro ao tocar som:', e);
+    }
   }
 
   // Função para atualizar o timer
@@ -611,11 +596,18 @@
       clearInterval(timerInterval);
       timerRunning = false;
       vibrateDevice();
+      
+      // Mostrar alerta visual
+      document.getElementById('timer').style.backgroundColor = '#ff0000';
+      document.getElementById('timer').style.color = '#ffffff';
+      setTimeout(() => {
+        document.getElementById('timer').style.backgroundColor = '#000000';
+        document.getElementById('timer').style.color = '#ffffff';
+      }, 3000);
     } else {
       totalSeconds--;
     }
   }
-
   // Função para iniciar o timer
   function startTimer() {
     if (timerRunning) return;
