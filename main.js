@@ -110,39 +110,6 @@ function playSound() {
   audio.play();
 }
 
-let vibrationInterval;
-let isVibrating = false;
-
-function toggleVibration() {
-  const vibrateBtn = document.getElementById('vibrate-btn');
-  
-  if (isVibrating) {
-    // Parar vibração
-    clearInterval(vibrationInterval);
-    vibrateBtn.textContent = "🔊 Vibrar";
-    vibrateBtn.classList.remove('vibrating');
-    isVibrating = false;
-  } else {
-    // Iniciar vibração
-    vibrateBtn.textContent = "■ Parar";
-    vibrateBtn.classList.add('vibrating');
-    isVibrating = true;
-    
-    // Vibrar imediatamente e então a cada 2 segundos
-    vibrateDevice();
-    vibrationInterval = setInterval(vibrateDevice, 2000);
-  }
-}
-
-function vibrateDevice() {
-  // Verifica se a API de vibração é suportada
-  if ("vibrate" in navigator) {
-    // Vibra por 500ms
-    navigator.vibrate(500);
-  } else {
-    alert("Seu dispositivo não suporta vibração ou o navegador não tem permissão.");
-  }
-}
 
 // Função para iniciar ou reiniciar o temporizador
 function startTimer() {
@@ -341,4 +308,28 @@ function setTimer(minutes) {
 
   }
         
+
+function vibrateWatch() {
+  if (navigator.vibrate) {
+    // Padrão de vibração: 3 pulsos curtos
+    navigator.vibrate([300, 100, 300, 100, 300]);
+  } else {
+    // Fallback para notificação
+    alert("Tempo esgotado!");
+  }
+}
+
+let wakeLock = null;
+
+async function activateWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    console.log("Tela mantida ativa!");
+  } catch (err) {
+    console.error("Erro ao ativar Wake Lock:", err);
+  }
+}
+
+// Chamar quando o timer iniciar
+activateWakeLock();
 
