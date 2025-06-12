@@ -706,6 +706,24 @@
     document.getElementById('reps').value = '';
   }
 
+  function enviarNotificacao() {
+  if (Notification.permission === "granted") {
+    new Notification("Alerta do site!", {
+      body: "Essa é uma notificação de teste.",
+      icon: "icone.png"
+    });
+  } else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then(permission => {
+      if (permission === "granted") {
+        new Notification("Alerta do site!", {
+          body: "Essa é uma notificação de teste.",
+          icon: "icone.png"
+        });
+      }
+    });
+  }
+}
+
   // Carrega ao abrir
   window.onload = updateList;
 </script>
