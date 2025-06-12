@@ -501,8 +501,140 @@
   </div>
 
 <script>
+  // Variáveis globais para o timer
+  let timerInterval;
+  let totalSeconds = 120; // 2 minutos padrão
+  let vibrationEnabled = true;
+  let timerRunning = false;
+  let wakeLock = null;
 
+  // Solicitar permissão para notificações e wake lock
+  document.addEventListener('DOMContentLoaded', async () => {
+    if ('Notification' in window) {
+      try {
+        await Notification.requestPermission();
+      } catch (e) {
+        console.error('Erro ao solicitar permissão para notificações:', e);
+      }
+    }
 
+    // Tentar adquirir wake lock para manter a tela ativa
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLock = await navigator.wakeLock.request('screen');
+        console.log('Wake Lock ativado');
+        
+        // Recuperar wake lock quando a página ganhar foco novamente
+        document.addEventListener('visibilitychange', async () => {
+          if (document.visibilityState === 'visible' && wakeLock === null) {
+            wakeLock = await navigator.wakeLock.request('screen');
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao ativar Wake Lock:', err);
+    }
+  });
+
+  // Função para vibrar o dispositivo
+  function vibrateDevice() {
+    if (!vibrationEnabled) return;
+    
+    // Verifica se a API de vibração está disponível
+    if ('vibrate' in navigator) {
+      // Vibra por 1 segundo, pausa por 0.5s, vibra por 1s (padrão de alerta)
+      navigator.vibrate([1000, 500, 1000]);
+    }
+    
+    // Se não conseguir vibrar ou se a vibração não funcionar com tela bloqueada,
+    // usamos uma notificação como fallback
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('Tempo esgotado!', {
+        body: 'O tempo do seu descanso acabou!',
+        icon: './assets/img/favicon.png'
+      });
+    }
+    
+    // Também tocamos um som (opcional)
+    playAlertSound();
+  }
+
+  // Função para tocar um som de alerta
+  function playAlertSound() {
+    const audio = new Audio();
+    audio.src = 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3';
+    audio.volume = 0.5;
+    audio.play().catch(e => console.error('Erro ao reproduzir som:', e));
+  }
+
+  // Função para atualizar o timer
+  function updateTimer() {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    
+    document.getElementById('timer').textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    if (totalSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      vibrateDevice();
+    } else {
+      totalSeconds--;
+    }
+  }
+
+  // Função para iniciar o timer
+  function startTimer() {
+    if (timerRunning) return;
+    
+    timerRunning = true;
+    updateTimer(); // Atualiza imediatamente
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+
+  // Função para parar o timer
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+  }
+
+  // Função para resetar o timer
+  function resetTimer() {
+    stopTimer();
+    totalSeconds = 120; // Volta para 2 minutos
+    document.getElementById('timer').textContent = '02:00';
+  }
+
+  // Função para definir o tempo do timer
+  function setTimer(minutes) {
+    stopTimer();
+    totalSeconds = minutes * 60;
+    document.getElementById('timer').textContent = 
+      `${minutes.toString().padStart(2, '0')}:00`;
+  }
+
+  // Função para alternar as opções de tempo
+  function toggleTimeOptions() {
+    const options = document.getElementById('time-options');
+    options.style.display = options.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // Função para alternar a vibração
+  function toggleVibration() {
+    vibrationEnabled = !vibrationEnabled;
+    const btn = document.getElementById('vibrate-btn');
+    btn.classList.toggle('vibrating');
+    btn.textContent = vibrationEnabled ? '🔊 Vibrar' : '🔇 Silenciar';
+  }
+
+  // Função para alternar o footer
+  function toggleFooter() {
+    const footer = document.getElementById('footer');
+    footer.style.display = footer.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // Código para salvar os dados do treino
   let savedData = JSON.parse(localStorage.getItem("treinoData")) || [];
 
   function saveData() {
@@ -552,9 +684,7 @@
 
   // Carrega ao abrir
   window.onload = updateList;
-
 </script>
-
 
 </footer>
 
@@ -568,4 +698,3 @@
     <script src="./js/main.js"></script>
 </body>
 </html>
-
