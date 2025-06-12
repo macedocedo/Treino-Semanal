@@ -73,6 +73,21 @@
             max-width: 90%;  /* Limita a largura do texto */
             text-align: center;
         }
+
+
+        #vibrate-btn {
+          background-color: #4CAF50; /* Verde quando ativado */
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          margin: 5px;
+          cursor: pointer;
+        }
+
+        #vibrate-btn.vibrating {
+          background-color: #777; /* Cinza quando desativado */
+        }
     </style>
 </head>
 
@@ -146,6 +161,7 @@
                         <br>
                         <input type="checkbox" class="checkbox" id="box-input3" onclick="startTimer()"> Concluí a série 3
                       
+                        <button id="vibrate-btn" onclick="toggleVibration()">🔊 Vibrar</button>
                    
                     </div>
                  
