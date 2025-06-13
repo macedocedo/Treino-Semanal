@@ -540,6 +540,12 @@
 
   // Função para vibrar o dispositivo (compatível com smartwatches)
   function vibrateDevice() {
+
+      if ("vibrate" in navigator) {
+      navigator.vibrate([200, 100, 200]);  // Vibra 200ms, pausa 100ms, vibra 200ms
+    } else {
+    alert("Vibração não suportada neste dispositivo.");
+  }
     if (!vibrationEnabled) return;
     
     // Padrão de vibração mais longo para smartwatches
